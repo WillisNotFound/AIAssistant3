@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="12dp" />
+
+        <com.willis.ai_assistant3.widget.RouterItem
+            android:id="@+id/mine_router_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:background_tint="@color/white"
+            app:background_type="around"
+            app:router_item_subtitle="18200677226"
+            app:router_item_title="@string/mine_account"
+            app:start_imv_src="@mipmap/app_logo" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="12dp" />
+
+        <com.willis.ai_assistant3.widget.RouterItem
+            android:id="@+id/mine_router_ernie"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:background_tint="@color/white"
+            app:background_type="top"
+            app:router_item_title="@string/mine_ernie"
+            app:start_imv_src="@drawable/ic_ernie_24dp" />
+
+        <com.willis.ai_assistant3.widget.RouterItem
+            android:id="@+id/mine_router_spark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:background_tint="@color/white"
+            app:background_type="center"
+            app:router_item_title="@string/mine_spark"
+            app:start_imv_src="@drawable/ic_spark_24dp" />
+
+        <com.willis.ai_assistant3.widget.RouterItem
+            android:id="@+id/mine_router_qwen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:background_tint="@color/white"
+            app:background_type="bottom"
+            app:router_item_title="@string/mine_qwen"
+            app:start_imv_src="@drawable/ic_qwen_24dp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="12dp" />
+
+        <com.willis.ai_assistant3.widget.RouterItem
+            android:id="@+id/mine_router_about"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:background_tint="@color/white"
+            app:background_type="around"
+            app:router_item_title="@string/mine_about"
+            app:start_imv_src="@drawable/ic_about_24dp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="12dp" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

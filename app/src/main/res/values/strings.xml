@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">YAI</string>
+    <string name="app_network_unusable">当前网路不可用</string>
+
+    <string name="splash_skip">跳 过 %d</string>
+
+    <string name="login_init_failure">JVerificationInterface初始化失败</string>
+    <string name="login_verify_login">本机一键登录</string>
+    <string name="login_verify_disable">当前网络环境不支持一键登录\n请切换为流量环境并重试</string>
+    <string name="login_verify_support">支持一键登陆</string>
+    <string name="login_sms_login">短信登录</string>
+    <string name="login_sms_disable">当前网络环境不支持短信登录\n请切换为WIFI或流量环境并重试</string>
+    <string name="login_sms_un_support">暂不支持短信登陆</string>
+
+    <string name="chat_history_title">对话</string>
+    <string name="chat_history_delete">删除</string>
+    <string name="chat_history_tip">提示</string>
+    <string name="chat_history_tip_delete_chat">是否删除对话：%s</string>
+
+    <string name="chat_send">发送</string>
+    <string name="chat_empty">空空如也</string>
+
+    <string name="create_chat_title">创建对话</string>
+    <string name="create_chat_model">模型</string>
+    <string name="create_chat_nickname">昵称</string>
+    <string name="create_chat_save">保存</string>
+
+    <string name="mine_title">我的</string>
+    <string name="mine_account">账号</string>
+    <string name="mine_ernie">文心一言</string>
+    <string name="mine_spark">讯飞星火</string>
+    <string name="mine_qwen">阿里千问</string>
+    <string name="mine_about">关于我们</string>
+
+    <string name="setting_account_title">账号</string>
+    <string name="setting_account_phone">手机号</string>
+    <string name="setting_account_nickname">昵称</string>
+    <string name="setting_account_create_time">创建时间</string>
+    <string name="setting_account_exit">退出登录</string>
+
+    <string name="setting_ernie_title">文心一言</string>
+
+    <string name="setting_spark_title">讯飞星火</string>
+
+    <string name="setting_spark_qwen">阿里千问</string>
+</resources>

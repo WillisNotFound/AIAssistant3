@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ActivityDialogStyle">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowBackground">@drawable/shape_dialog</item>
+    </style>
+
+    <style name="Base_BottomDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/base_dialog_slid_up</item>
+        <item name="android:windowExitAnimation">@anim/base_dialog_slid_down</item>
+    </style>
+
+    <style name="Base_FadeDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/base_dialog_fade_in</item>
+        <item name="android:windowExitAnimation">@anim/base_dialog_fade_out</item>
+    </style>
+
+    <style name="Base_FadePopupAnimation">
+        <item name="android:windowEnterAnimation">@anim/base_dialog_fade_in</item>
+        <item name="android:windowExitAnimation">@anim/base_dialog_fade_out</item>
+    </style>
+
+</resources>

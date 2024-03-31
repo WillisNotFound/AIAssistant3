@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:name=".App"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:targetApi="31">
+
+        <activity
+            android:name=".ui.splash.SplashActivity"
+            android:exported="true"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:theme="@style/LoginTheme" />
+
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:theme="@style/MainTheme" />
+
+        <activity
+            android:name=".ui.chat.ChatActivity"
+            android:theme="@style/ChatTheme" />
+
+        <activity
+            android:name=".ui.setting.account.AccountSettingActivity"
+            android:theme="@style/SettingTheme" />
+
+        <activity
+            android:name=".ui.setting.ernie.BotERNIESettingActivity"
+            android:theme="@style/SettingTheme" />
+
+        <activity
+            android:name=".ui.setting.spark.BotSparkSettingActivity"
+            android:theme="@style/SettingTheme" />
+
+
+        <activity
+            android:name=".ui.setting.qwen.BotQwenSettingActivity"
+            android:theme="@style/SettingTheme" />
+
+        <activity
+            android:name="cn.jiguang.verifysdk.CtLoginActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTop"
+            android:screenOrientation="unspecified"
+            android:theme="@style/ActivityDialogStyle" />
+
+        <!--        <activity-->
+        <!--            android:name="com.cmic.gen.sdk.view.GenLoginAuthActivity"-->
+        <!--            android:configChanges="orientation|keyboardHidden|screenSize"-->
+        <!--            android:launchMode="singleTop"-->
+        <!--            android:screenOrientation="unspecified"-->
+        <!--            android:theme="@style/ActivityDialogStyle" />-->
+        <!--        &lt;!&ndash; Required &ndash;&gt;-->
+        <!--        <activity-->
+        <!--            android:name="cn.jiguang.verifysdk.CtLoginActivity"-->
+        <!--            android:configChanges="orientation|keyboardHidden|screenSize"-->
+        <!--            android:launchMode="singleTop"-->
+        <!--            android:screenOrientation="unspecified"-->
+        <!--            android:theme="@style/ActivityDialogStyle" />-->
+        <!--        &lt;!&ndash; Required &ndash;&gt;-->
+        <!--        <meta-data-->
+        <!--            android:name="JPUSH_APPKEY"-->
+        <!--            android:value="${JPUSH_APPKEY}" /> &lt;!&ndash; </>值来自开发者平台取得的AppKey &ndash;&gt;-->
+        <!--        <meta-data-->
+        <!--            android:name="JPUSH_CHANNEL"-->
+        <!--            android:value="${JPUSH_CHANNEL}" />-->
+    </application>
+
+</manifest>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.willis.ai_assistant3.widget.TopBar
+        android:id="@+id/setting_account_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        app:left_btn_src="@drawable/ic_back_24dp"
+        app:top_bar_title="@string/setting_account_title" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="12dp" />
+
+            <com.willis.ai_assistant3.widget.RouterItem
+                android:id="@+id/setting_account_router_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:background_tint="@color/white"
+                app:background_type="top"
+                app:router_item_title="@string/setting_account_phone" />
+
+            <com.willis.ai_assistant3.widget.RouterItem
+                android:id="@+id/setting_account_router_nickname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:background_tint="@color/white"
+                app:background_type="center"
+                app:end_imv_src="@drawable/ic_edit_24dp"
+                app:router_item_title="@string/setting_account_nickname" />
+
+
+            <com.willis.ai_assistant3.widget.RouterItem
+                android:id="@+id/setting_account_router_create_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:background_tint="@color/white"
+                app:background_type="bottom"
+                app:router_item_title="@string/setting_account_create_time" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="12dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/setting_account_btn_exit"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:text="@string/setting_account_exit"
+                android:textColor="@color/gray_900"
+                android:textSize="14sp"
+                app:backgroundTint="@color/white"
+                app:cornerRadius="12dp"
+                app:rippleColor="@color/gray_200" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

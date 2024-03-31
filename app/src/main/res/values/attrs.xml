@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TopBar">
+        <attr name="top_bar_title" format="string" />
+        <attr name="left_btn_src" format="reference" />
+        <attr name="right_btn_src" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="RouterItem">
+        <attr name="router_item_title" format="string" />
+        <attr name="router_item_subtitle" format="string" />
+        <attr name="start_imv_src" format="reference" />
+        <attr name="end_imv_src" format="reference" />
+        <attr name="background_tint" format="color" />
+        <attr name="background_type">
+            <enum name="center" value="0" />
+            <enum name="top" value="1" />
+            <enum name="bottom" value="2" />
+            <enum name="around" value="3" />
+        </attr>
+    </declare-styleable>
+</resources>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="6dp">
+
+    <ImageView
+        android:id="@+id/item_chat_message_left_imv_avatar"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:background="@drawable/shape_bg_avatar"
+        android:padding="6dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_ernie_24dp" />
+
+    <TextView
+        android:id="@+id/item_chat_message_left_tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="48dp"
+        android:background="@drawable/shape_bg_round"
+        android:backgroundTint="@color/white"
+        android:gravity="start|center_vertical"
+        android:maxWidth="256dp"
+        android:minWidth="36dp"
+        android:minHeight="36dp"
+        android:padding="8dp"
+        android:textColor="@color/gray_900"
+        android:textColorHighlight="@color/blue_gray_50"
+        android:textIsSelectable="true"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/item_chat_message_left_imv_avatar"
+        app:layout_constraintTop_toTopOf="@id/item_chat_message_left_imv_avatar"
+        tools:text="你好" />
+
+    <TextView
+        android:id="@+id/item_chat_message_left_tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:textColor="@color/gray_700"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@id/item_chat_message_left_tv_content"
+        app:layout_constraintTop_toBottomOf="@id/item_chat_message_left_tv_content"
+        tools:text="2023.12.23 14:00" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

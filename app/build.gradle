@@ -1,0 +1,99 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+}
+
+android {
+    signingConfigs {
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file('local.properties').newDataInputStream())
+        def keystoreFile = file(properties.getProperty('storeFile'))
+        def storePsw = properties.getProperty('storePassword')
+        def alias = properties.getProperty('keyAlias')
+        def keyPsw = properties.getProperty('keyPassword')
+
+        debug {
+            storeFile keystoreFile
+            storePassword storePsw
+            keyAlias alias
+            keyPassword keyPsw
+        }
+
+        release {
+            storeFile keystoreFile
+            storePassword storePsw
+            keyAlias alias
+            keyPassword keyPsw
+        }
+    }
+
+    namespace 'com.willis.ai_assistant3'
+    compileSdk globalConfig.compileSdkVersion
+
+    defaultConfig {
+        applicationId globalConfig.applicationId
+        minSdk globalConfig.minSdkVersion
+        targetSdk globalConfig.targetSdkVersion
+        versionCode globalConfig.versionCode
+        versionName globalConfig.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
+        }
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME: globalConfig.applicationId,
+                JPUSH_APPKEY : "dcdb3fa736ef1faae64a1b56", //Portal 上注册的包名对应的 appKey.
+                JPUSH_CHANNEL: "developer-default", // 暂时填写默认值即可.
+        ]
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+
+    viewBinding {
+        enable = true
+    }
+}
+
+dependencies {
+    implementation(project(':ernie'))
+    implementation(project(':spark'))
+    implementation(project(':qwen'))
+
+    implementation androidx.appcompat
+    implementation androidx.activity_ktx
+    implementation androidx.constraint_layout
+    implementation androidx.core_ktx
+    implementation androidx.fragment_ktx
+    implementation androidx.lifecycle_runtime_ktx
+    implementation androidx.lifecycle_viewmodel_ktx
+    implementation androidx.room_runtime
+    implementation androidx.room_ktx
+    kapt androidx.room_compiler
+    implementation androidx.swipe_refresh_layout
+
+    implementation google.material
+    implementation google.gson
+
+    implementation other.base_library
+    implementation other.jverification
+
+    implementation squareup.okhttp3
+}

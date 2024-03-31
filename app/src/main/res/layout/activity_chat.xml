@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.willis.ai_assistant3.widget.TopBar
+        android:id="@+id/chat_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        app:left_btn_src="@drawable/ic_back_24dp" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/chat_tv_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/chat_empty"
+            android:textColor="@color/gray_700"
+            android:textSize="14sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/chat_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="3"
+            tools:listitem="@layout/item_chat_message_left" />
+
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/gray_300" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="12dp">
+
+        <EditText
+            android:id="@+id/chat_edt_message"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/shape_bg_round"
+            android:backgroundTint="@color/white"
+            android:minHeight="48dp"
+            android:padding="12dp"
+            android:textColor="@color/gray_900"
+            android:textCursorDrawable="@drawable/shape_cursor"
+            android:textSize="14sp" />
+
+        <Space
+            android:layout_width="6dp"
+            android:layout_height="match_parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/chat_btn_send"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="64dp"
+            android:layout_height="48dp"
+            android:text="@string/chat_send"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:backgroundTint="@color/blue_400"
+            app:cornerRadius="12dp"
+            app:rippleColor="@color/blue_200" />
+
+    </LinearLayout>
+</LinearLayout>
