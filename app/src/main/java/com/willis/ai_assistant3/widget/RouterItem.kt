@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.willis.ai_assistant3.R
 import com.willis.ai_assistant3.databinding.WidgetRouterItemBinding
@@ -38,17 +39,27 @@ class RouterItem @JvmOverloads constructor(
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.RouterItem)
         val title = typedArray.getString(R.styleable.RouterItem_router_item_title)
         val subtitle = typedArray.getString(R.styleable.RouterItem_router_item_subtitle)
+        val showStartImv = typedArray.getBoolean(R.styleable.RouterItem_show_start_imv, false)
+        val showEndImv = typedArray.getBoolean(R.styleable.RouterItem_show_end_imv, false)
+        val showTitleEndImv =
+            typedArray.getBoolean(R.styleable.RouterItem_show_title_end_imv, false)
         val startImvSrc = typedArray.getResourceId(R.styleable.RouterItem_start_imv_src, -1)
         val endImvSrc = typedArray.getResourceId(R.styleable.RouterItem_end_imv_src, -1)
+        val titleEndImvSrc = typedArray.getResourceId(R.styleable.RouterItem_title_end_imv_src, -1)
         val backgroundType = typedArray.getInt(R.styleable.RouterItem_background_type, -1)
-        val backgroundTint = typedArray.getColor(R.styleable.RouterItem_background_tint, Color.WHITE)
+        val backgroundTint =
+            typedArray.getColor(R.styleable.RouterItem_background_tint, Color.WHITE)
         typedArray.recycle()
         if (title != null) setTitle(title)
         setSubtitle(subtitle)
-        setStartImvSrc(startImvSrc)
-        setEndImvSrc(endImvSrc)
-        setBackground(backgroundType)
-        setBackgroundTine(backgroundTint)
+        setStartImvVisible(showStartImv)
+        setEndImvVisible(showEndImv)
+        setTitleEndImvVisible(showTitleEndImv)
+        if (startImvSrc != -1) setStartImvSrc(startImvSrc)
+        if (endImvSrc != -1) setEndImvSrc(endImvSrc)
+        if (titleEndImvSrc != -1) setTitleEndImvSrc(titleEndImvSrc)
+        setBackgroundType(backgroundType)
+        setBackgroundTint(backgroundTint)
     }
 
     fun setTitle(title: String) {
@@ -64,25 +75,52 @@ class RouterItem @JvmOverloads constructor(
         }
     }
 
-    fun setStartImvSrc(src: Int) {
-        if (src == -1) {
-            mBinding.routerImvStart.gone()
-        } else {
+    fun setStartImvVisible(visible: Boolean) {
+        if (visible) {
             mBinding.routerImvStart.visible()
+        } else {
+            mBinding.routerImvStart.gone()
+        }
+    }
+
+    fun setStartImvSrc(src: Int) {
+        try {
             mBinding.routerImvStart.setImageResource(src)
+        } catch (e: Exception) {
+        }
+    }
+
+    fun setEndImvVisible(visible: Boolean) {
+        if (visible) {
+            mBinding.routerImvEnd.visible()
+        } else {
+            mBinding.routerImvEnd.gone()
         }
     }
 
     fun setEndImvSrc(src: Int) {
-        if (src == -1) {
-            mBinding.routerImvEnd.gone()
-        } else {
-            mBinding.routerImvEnd.visible()
+        try {
             mBinding.routerImvEnd.setImageResource(src)
+        } catch (e: Exception) {
         }
     }
 
-    fun setBackground(backgroundType: Int) {
+    fun setTitleEndImvVisible(visible: Boolean) {
+        if (visible) {
+            mBinding.routerImvTitleEnd.visible()
+        } else {
+            mBinding.routerImvTitleEnd.gone()
+        }
+    }
+
+    fun setTitleEndImvSrc(src: Int) {
+        try {
+            mBinding.routerImvTitleEnd.setImageResource(src)
+        } catch (e: Exception) {
+        }
+    }
+
+    fun setBackgroundType(backgroundType: Int) {
         when (backgroundType) {
             BG_TYPE_CENTER -> setBackground(ColorDrawable(Color.WHITE))
             BG_TYPE_TOP -> setBackgroundResource(R.drawable.shape_bg_round_top)
@@ -91,7 +129,13 @@ class RouterItem @JvmOverloads constructor(
         }
     }
 
-    fun setBackgroundTine(backgroundTint: Int) {
+    fun setBackgroundTint(backgroundTint: Int) {
         background?.setTint(backgroundTint)
+    }
+
+    fun setOnTitleEndImvClick(onClick: (View) -> Unit) {
+        mBinding.routerImvTitleEnd.setOnClickListener {
+            onClick(it)
+        }
     }
 }

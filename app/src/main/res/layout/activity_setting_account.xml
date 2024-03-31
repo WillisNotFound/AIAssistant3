@@ -34,6 +34,9 @@
                 android:layout_height="wrap_content"
                 app:background_tint="@color/white"
                 app:background_type="top"
+                app:show_end_imv="false"
+                app:show_start_imv="false"
+                app:show_title_end_imv="false"
                 app:router_item_title="@string/setting_account_phone" />
 
             <com.willis.ai_assistant3.widget.RouterItem
@@ -42,6 +45,9 @@
                 android:layout_height="wrap_content"
                 app:background_tint="@color/white"
                 app:background_type="center"
+                app:show_end_imv="true"
+                app:show_start_imv="false"
+                app:show_title_end_imv="false"
                 app:end_imv_src="@drawable/ic_edit_24dp"
                 app:router_item_title="@string/setting_account_nickname" />
 
@@ -52,6 +58,9 @@
                 android:layout_height="wrap_content"
                 app:background_tint="@color/white"
                 app:background_type="bottom"
+                app:show_end_imv="false"
+                app:show_start_imv="false"
+                app:show_title_end_imv="false"
                 app:router_item_title="@string/setting_account_create_time" />
 
             <Space

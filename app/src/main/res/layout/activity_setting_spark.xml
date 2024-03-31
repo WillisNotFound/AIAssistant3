@@ -35,6 +35,9 @@
                 app:background_tint="@color/white"
                 app:background_type="top"
                 app:end_imv_src="@drawable/ic_edit_24dp"
+                app:show_end_imv="false"
+                app:show_start_imv="false"
+                app:show_title_end_imv="true"
                 app:router_item_title="APP ID" />
 
             <com.willis.ai_assistant3.widget.RouterItem
@@ -44,6 +47,9 @@
                 app:background_tint="@color/white"
                 app:background_type="center"
                 app:end_imv_src="@drawable/ic_edit_24dp"
+                app:show_end_imv="true"
+                app:show_start_imv="false"
+                app:show_title_end_imv="false"
                 app:router_item_title="API KEY" />
 
 
@@ -54,6 +60,9 @@
                 app:background_tint="@color/white"
                 app:background_type="center"
                 app:end_imv_src="@drawable/ic_edit_24dp"
+                app:show_end_imv="true"
+                app:show_start_imv="false"
+                app:show_title_end_imv="false"
                 app:router_item_title="API SECRET" />
 
             <com.willis.ai_assistant3.widget.RouterItem
@@ -63,6 +72,9 @@
                 app:background_tint="@color/white"
                 app:background_type="bottom"
                 app:end_imv_src="@drawable/ic_edit_24dp"
+                app:show_end_imv="true"
+                app:show_start_imv="false"
+                app:show_title_end_imv="false"
                 app:router_item_title="TEMPERATURE" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

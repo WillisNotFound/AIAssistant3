@@ -23,6 +23,9 @@
             app:background_type="around"
             app:router_item_subtitle="18200677226"
             app:router_item_title="@string/mine_account"
+            app:show_end_imv="false"
+            app:show_start_imv="true"
+            app:show_title_end_imv="false"
             app:start_imv_src="@mipmap/app_logo" />
 
         <Space
@@ -36,6 +39,9 @@
             app:background_tint="@color/white"
             app:background_type="top"
             app:router_item_title="@string/mine_ernie"
+            app:show_end_imv="false"
+            app:show_start_imv="true"
+            app:show_title_end_imv="false"
             app:start_imv_src="@drawable/ic_ernie_24dp" />
 
         <com.willis.ai_assistant3.widget.RouterItem
@@ -45,6 +51,9 @@
             app:background_tint="@color/white"
             app:background_type="center"
             app:router_item_title="@string/mine_spark"
+            app:show_end_imv="false"
+            app:show_start_imv="true"
+            app:show_title_end_imv="false"
             app:start_imv_src="@drawable/ic_spark_24dp" />
 
         <com.willis.ai_assistant3.widget.RouterItem
@@ -54,6 +63,9 @@
             app:background_tint="@color/white"
             app:background_type="bottom"
             app:router_item_title="@string/mine_qwen"
+            app:show_end_imv="false"
+            app:show_start_imv="true"
+            app:show_title_end_imv="false"
             app:start_imv_src="@drawable/ic_qwen_24dp" />
 
         <Space
@@ -67,6 +79,9 @@
             app:background_tint="@color/white"
             app:background_type="around"
             app:router_item_title="@string/mine_about"
+            app:show_end_imv="false"
+            app:show_start_imv="true"
+            app:show_title_end_imv="false"
             app:start_imv_src="@drawable/ic_about_24dp" />
 
         <Space

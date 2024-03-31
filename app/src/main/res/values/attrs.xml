@@ -9,8 +9,12 @@
     <declare-styleable name="RouterItem">
         <attr name="router_item_title" format="string" />
         <attr name="router_item_subtitle" format="string" />
+        <attr name="show_start_imv" format="boolean" />
         <attr name="start_imv_src" format="reference" />
+        <attr name="show_end_imv" format="boolean" />
         <attr name="end_imv_src" format="reference" />
+        <attr name="show_title_end_imv" format="boolean" />
+        <attr name="title_end_imv_src" format="reference" />
         <attr name="background_tint" format="color" />
         <attr name="background_type">
             <enum name="center" value="0" />
