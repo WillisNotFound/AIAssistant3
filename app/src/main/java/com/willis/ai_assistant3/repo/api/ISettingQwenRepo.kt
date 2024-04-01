@@ -1,5 +1,6 @@
 package com.willis.ai_assistant3.repo.api
 
+import com.willis.ai_assistant3.data.bean.SettingQwen
 import com.willis.base.data.BaseResult
 import kotlinx.coroutines.flow.StateFlow
 
@@ -9,11 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
  * @date: 2023/12/28
  */
 interface ISettingQwenRepo {
-    val apiKeyFlow: StateFlow<String>
-
-    val modelFlow: StateFlow<String>
-
-    val temperatureFlow: StateFlow<Float>
+    val state: StateFlow<SettingQwen?>
 
     suspend fun updateApiKey(newApiKey: String): BaseResult<Unit>
 

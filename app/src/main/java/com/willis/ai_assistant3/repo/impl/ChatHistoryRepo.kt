@@ -1,7 +1,7 @@
 package com.willis.ai_assistant3.repo.impl
 
 import com.willis.ai_assistant3.data.bean.ChatInfo
-import com.willis.ai_assistant3.data.db.database.ChatDatabase
+import com.willis.ai_assistant3.data.db.database.UserDatabase
 import com.willis.ai_assistant3.repo.api.IChatInfoRepo
 import com.willis.ai_assistant3.repo.appRepo
 import com.willis.base.data.BaseResult
@@ -22,7 +22,7 @@ class ChatHistoryRepo private constructor(phone: String) : IChatInfoRepo {
         }
     }
 
-    private val mChatInfoDao = ChatDatabase.getInstance(phone).chatInfoDao()
+    private val mChatInfoDao = UserDatabase.getInstance(phone).chatInfoDao()
 
     private val mChatInfoListFlow = MutableSharedFlow<List<ChatInfo>>(1, 1)
     override val chatInfoListFlow: SharedFlow<List<ChatInfo>> = mChatInfoListFlow

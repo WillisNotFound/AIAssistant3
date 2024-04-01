@@ -25,26 +25,26 @@ class BotSparkSettingActivity : BaseActivity<ActivitySettingSparkBinding>() {
 
     override fun initView() {
         mBinding.settingSparkRouterAppId.apply {
-            mViewModel.appIdFlow.collectWhenResumed(lifecycleScope) {
-                setSubtitle(it)
+            mViewModel.state.collectWhenResumed(lifecycleScope) {
+                setSubtitle(it?.appId)
             }
         }
 
-        mBinding.settingSparkRouterAppKey.apply {
-            mViewModel.apiKeyFlow.collectWhenResumed(lifecycleScope) {
-                setSubtitle(it)
+        mBinding.settingSparkRouterApiKey.apply {
+            mViewModel.state.collectWhenResumed(lifecycleScope) {
+                setSubtitle(it?.apiKey)
             }
         }
 
-        mBinding.settingSparkRouterAppSecret.apply {
-            mViewModel.apiSecretFlow.collectWhenResumed(lifecycleScope) {
-                setSubtitle(it)
+        mBinding.settingSparkRouterApiSecret.apply {
+            mViewModel.state.collectWhenResumed(lifecycleScope) {
+                setSubtitle(it?.apiSecret)
             }
         }
 
         mBinding.settingSparkRouterTemperature.apply {
-            mViewModel.temperatureFlow.collectWhenResumed(lifecycleScope) {
-                setSubtitle(it.toString())
+            mViewModel.state.collectWhenResumed(lifecycleScope) {
+                setSubtitle(it?.temperature.toString())
             }
         }
     }
@@ -56,40 +56,49 @@ class BotSparkSettingActivity : BaseActivity<ActivitySettingSparkBinding>() {
 
         mBinding.settingSparkRouterAppId.setOnClickListener {
             lifecycleScope.launchWhenResumed {
-                val builder = EditDialogBuilder("修改（重启应用生效）", mViewModel.appIdFlow.value)
-                val editResult = dialogService.showEditDialog(supportFragmentManager, builder)
-                if (editResult is BaseResult.Success) {
-                    simpleHandleResult(mViewModel.updateAppId(editResult.value))
+                mViewModel.state.value?.appId?.let {
+                    val builder = EditDialogBuilder("修改（重启应用生效）", it)
+                    val editResult = dialogService.showEditDialog(supportFragmentManager, builder)
+                    if (editResult is BaseResult.Success) {
+                        simpleHandleResult(mViewModel.updateAppId(editResult.value))
+                    }
                 }
             }
         }
 
-        mBinding.settingSparkRouterAppKey.setOnClickListener {
+        mBinding.settingSparkRouterApiKey.setOnClickListener {
             lifecycleScope.launchWhenResumed {
-                val builder = EditDialogBuilder("修改（重启应用生效）", mViewModel.apiKeyFlow.value)
-                val editResult = dialogService.showEditDialog(supportFragmentManager, builder)
-                if (editResult is BaseResult.Success) {
-                    simpleHandleResult(mViewModel.updateApiKey(editResult.value))
+                mViewModel.state.value?.apiKey?.let {
+                    val builder = EditDialogBuilder("修改（重启应用生效）", it)
+                    val editResult = dialogService.showEditDialog(supportFragmentManager, builder)
+                    if (editResult is BaseResult.Success) {
+                        simpleHandleResult(mViewModel.updateApiKey(editResult.value))
+                    }
                 }
             }
         }
 
-        mBinding.settingSparkRouterAppSecret.setOnClickListener {
+        mBinding.settingSparkRouterApiSecret.setOnClickListener {
             lifecycleScope.launchWhenResumed {
-                val builder = EditDialogBuilder("修改（重启应用生效）", mViewModel.apiSecretFlow.value)
-                val editResult = dialogService.showEditDialog(supportFragmentManager, builder)
-                if (editResult is BaseResult.Success) {
-                    simpleHandleResult(mViewModel.updateApiSecret(editResult.value))
+                mViewModel.state.value?.apiSecret?.let {
+                    val builder = EditDialogBuilder("修改（重启应用生效）", it)
+                    val editResult = dialogService.showEditDialog(supportFragmentManager, builder)
+                    if (editResult is BaseResult.Success) {
+                        simpleHandleResult(mViewModel.updateApiSecret(editResult.value))
+                    }
                 }
             }
         }
 
         mBinding.settingSparkRouterTemperature.setOnClickListener {
             lifecycleScope.launchWhenResumed {
-                val builder = EditDialogBuilder("修改，范围 (0.0, 1.0]（重启应用生效）", mViewModel.temperatureFlow.value.toString())
-                val editResult = dialogService.showEditDialog(supportFragmentManager, builder)
-                if (editResult is BaseResult.Success) {
-                    simpleHandleResult(mViewModel.updateTemperature(editResult.value))
+                mViewModel.state.value?.temperature?.let {
+                    val builder =
+                        EditDialogBuilder("修改，范围 (0.0, 1.0]（重启应用生效）", it.toString())
+                    val editResult = dialogService.showEditDialog(supportFragmentManager, builder)
+                    if (editResult is BaseResult.Success) {
+                        simpleHandleResult(mViewModel.updateTemperature(editResult.value))
+                    }
                 }
             }
         }

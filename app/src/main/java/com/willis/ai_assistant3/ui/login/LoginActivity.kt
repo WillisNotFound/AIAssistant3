@@ -48,19 +48,19 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         }
 
         mBinding.loginBtnVerify.setOnClickListener {
-//            lifecycleScope.launchWhenResumed {
-//                appRepo.login("10086")
-//                handleLoginResult(BaseResult.Success("欢迎10086", Unit))
-//            }
-            when (val result = mViewModel.canLoginAuth()) {
-                is BaseResult.Failure -> {
-                    toastService.showError(result.desc)
-                }
-
-                is BaseResult.Success -> {
-                    loginAuth()
-                }
+            lifecycleScope.launchWhenResumed {
+                appRepo.login("10086")
+                handleLoginResult(BaseResult.Success("欢迎10086", Unit))
             }
+//            when (val result = mViewModel.canLoginAuth()) {
+//                is BaseResult.Failure -> {
+//                    toastService.showError(result.desc)
+//                }
+//
+//                is BaseResult.Success -> {
+//                    loginAuth()
+//                }
+//            }
         }
 
         mBinding.loginBtnSms.setOnClickListener {

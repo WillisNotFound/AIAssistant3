@@ -1,5 +1,6 @@
 package com.willis.ai_assistant3.repo.api
 
+import com.willis.ai_assistant3.data.bean.SettingSpark
 import com.willis.base.data.BaseResult
 import kotlinx.coroutines.flow.StateFlow
 
@@ -9,13 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
  * @date: 2023/12/15
  */
 interface ISettingSparkRepo {
-    val appIdFlow: StateFlow<String>
-
-    val apiKeyFlow: StateFlow<String>
-
-    val apiSecretFlow: StateFlow<String>
-
-    val temperatureFlow: StateFlow<Float>
+    val state: StateFlow<SettingSpark?>
 
     suspend fun updateAppId(newAppId: String): BaseResult<Unit>
 

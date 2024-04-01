@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import com.willis.ai_assistant3.repo.api.ISettingSparkRepo
 import com.willis.ai_assistant3.repo.impl.SettingSparkRepo
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.withContext
 
 /**
@@ -15,10 +14,7 @@ import kotlinx.coroutines.withContext
 class BotSparkSettingViewModel : ViewModel() {
     private val mRepo: ISettingSparkRepo = SettingSparkRepo()
 
-    val appIdFlow: StateFlow<String> = mRepo.appIdFlow
-    val apiKeyFlow: StateFlow<String> = mRepo.apiKeyFlow
-    val apiSecretFlow: StateFlow<String> = mRepo.apiSecretFlow
-    val temperatureFlow: StateFlow<Float> = mRepo.temperatureFlow
+    val state = mRepo.state
 
     suspend fun updateAppId(newAppId: String) = withContext(Dispatchers.Default) {
         mRepo.updateAppId(newAppId)

@@ -1,6 +1,5 @@
 package com.willis.ai_assistant3.repo.impl
 
-import com.willis.ai_assistant3.data.bean.UpdateErnieClientId
 import com.willis.ai_assistant3.data.bean.UpdateNickname
 import com.willis.ai_assistant3.data.db.database.AppDatabase
 import com.willis.ai_assistant3.repo.api.ISettingAccountRepo

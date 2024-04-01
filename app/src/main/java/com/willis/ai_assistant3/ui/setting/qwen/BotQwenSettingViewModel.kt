@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import com.willis.ai_assistant3.repo.api.ISettingQwenRepo
 import com.willis.ai_assistant3.repo.impl.SettingQwenRepo
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.withContext
 
 /**
@@ -15,9 +14,7 @@ import kotlinx.coroutines.withContext
 class BotQwenSettingViewModel : ViewModel() {
     private val mRepo: ISettingQwenRepo = SettingQwenRepo()
 
-    val apiKeyFlow: StateFlow<String> = mRepo.apiKeyFlow
-    val modelFlow: StateFlow<String> = mRepo.modelFlow
-    val temperatureFlow: StateFlow<Float> = mRepo.temperatureFlow
+    val state = mRepo.state
 
     suspend fun updateApiKey(newApiKey: String) = withContext(Dispatchers.Default) {
         mRepo.updateApiKey(newApiKey)

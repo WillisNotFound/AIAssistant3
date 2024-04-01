@@ -26,32 +26,32 @@ class BotERNIESettingActivity : BaseActivity<ActivitySettingErnieBinding>() {
 
     override fun initView() {
         mBinding.settingErnieRouterClientId.apply {
-            mViewModel.clientIdFlow.collectWhenResumed(lifecycleScope) {
-                setSubtitle(it)
+            mViewModel.state.collectWhenResumed(lifecycleScope) {
+                setSubtitle(it?.clientId)
             }
         }
 
         mBinding.settingErnieRouterClientSecret.apply {
-            mViewModel.clientSecretFlow.collectWhenResumed(lifecycleScope) {
-                setSubtitle(it)
+            mViewModel.state.collectWhenResumed(lifecycleScope) {
+                setSubtitle(it?.clientSecret)
             }
         }
 
         mBinding.settingErnieRouterAccessToken.apply {
-            mViewModel.accessTokenFlow.collectWhenResumed(lifecycleScope) {
-                setSubtitle(it)
+            mViewModel.state.collectWhenResumed(lifecycleScope) {
+                setSubtitle(it?.accessToken)
             }
         }
 
         mBinding.settingErnieRouterUrl.apply {
-            mViewModel.urlFlow.collectWhenResumed(lifecycleScope) {
-                setSubtitle(it)
+            mViewModel.state.collectWhenResumed(lifecycleScope) {
+                setSubtitle(it?.url)
             }
         }
 
         mBinding.settingErnieRouterTemperature.apply {
-            mViewModel.temperatureFlow.collectWhenResumed(lifecycleScope) {
-                setSubtitle(it.toString())
+            mViewModel.state.collectWhenResumed(lifecycleScope) {
+                setSubtitle(it?.temperature.toString())
             }
         }
     }
@@ -63,20 +63,24 @@ class BotERNIESettingActivity : BaseActivity<ActivitySettingErnieBinding>() {
 
         mBinding.settingErnieRouterClientId.setOnClickListener {
             lifecycleScope.launchWhenResumed {
-                val builder = EditDialogBuilder("修改", mViewModel.clientIdFlow.value)
-                val editResult = dialogService.showEditDialog(supportFragmentManager, builder)
-                if (editResult is BaseResult.Success) {
-                    simpleHandleResult(mViewModel.updateClientId(editResult.value))
+                mViewModel.state.value?.clientId?.let {
+                    val builder = EditDialogBuilder("修改", it)
+                    val editResult = dialogService.showEditDialog(supportFragmentManager, builder)
+                    if (editResult is BaseResult.Success) {
+                        simpleHandleResult(mViewModel.updateClientId(editResult.value))
+                    }
                 }
             }
         }
 
         mBinding.settingErnieRouterClientSecret.setOnClickListener {
             lifecycleScope.launchWhenResumed {
-                val builder = EditDialogBuilder("修改", mViewModel.clientSecretFlow.value)
-                val editResult = dialogService.showEditDialog(supportFragmentManager, builder)
-                if (editResult is BaseResult.Success) {
-                    simpleHandleResult(mViewModel.updateClientSecret(editResult.value))
+                mViewModel.state.value?.clientSecret?.let {
+                    val builder = EditDialogBuilder("修改", it)
+                    val editResult = dialogService.showEditDialog(supportFragmentManager, builder)
+                    if (editResult is BaseResult.Success) {
+                        simpleHandleResult(mViewModel.updateClientSecret(editResult.value))
+                    }
                 }
             }
         }
@@ -92,20 +96,24 @@ class BotERNIESettingActivity : BaseActivity<ActivitySettingErnieBinding>() {
 
         mBinding.settingErnieRouterUrl.setOnClickListener {
             lifecycleScope.launchWhenResumed {
-                val builder = EditDialogBuilder("修改", mViewModel.urlFlow.value)
-                val editResult = dialogService.showEditDialog(supportFragmentManager, builder)
-                if (editResult is BaseResult.Success) {
-                    simpleHandleResult(mViewModel.updateUrl(editResult.value))
+                mViewModel.state.value?.url?.let {
+                    val builder = EditDialogBuilder("修改", it)
+                    val editResult = dialogService.showEditDialog(supportFragmentManager, builder)
+                    if (editResult is BaseResult.Success) {
+                        simpleHandleResult(mViewModel.updateUrl(editResult.value))
+                    }
                 }
             }
         }
 
         mBinding.settingErnieRouterTemperature.setOnClickListener {
             lifecycleScope.launchWhenResumed {
-                val builder = EditDialogBuilder("修改，范围 (0.0, 1.0]", mViewModel.temperatureFlow.value.toString())
-                val editResult = dialogService.showEditDialog(supportFragmentManager, builder)
-                if (editResult is BaseResult.Success) {
-                    simpleHandleResult(mViewModel.updateTemperature(editResult.value))
+                mViewModel.state.value?.temperature?.let {
+                    val builder = EditDialogBuilder("修改，范围 (0.0, 1.0]", it.toString())
+                    val editResult = dialogService.showEditDialog(supportFragmentManager, builder)
+                    if (editResult is BaseResult.Success) {
+                        simpleHandleResult(mViewModel.updateTemperature(editResult.value))
+                    }
                 }
             }
         }

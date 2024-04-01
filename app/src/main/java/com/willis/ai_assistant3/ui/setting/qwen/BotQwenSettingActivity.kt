@@ -25,20 +25,20 @@ class BotQwenSettingActivity : BaseActivity<ActivitySettingQwenBinding>() {
 
     override fun initView() {
         mBinding.settingQwenRouterApiKey.apply {
-            mViewModel.apiKeyFlow.collectWhenResumed(lifecycleScope) {
-                setSubtitle(it)
+            mViewModel.state.collectWhenResumed(lifecycleScope) {
+                setSubtitle(it?.apiKey)
             }
         }
 
         mBinding.settingQwenRouterModel.apply {
-            mViewModel.modelFlow.collectWhenResumed(lifecycleScope) {
-                setSubtitle(it)
+            mViewModel.state.collectWhenResumed(lifecycleScope) {
+                setSubtitle(it?.model)
             }
         }
 
         mBinding.settingQwenRouterTemperature.apply {
-            mViewModel.temperatureFlow.collectWhenResumed(lifecycleScope) {
-                setSubtitle(it.toString())
+            mViewModel.state.collectWhenResumed(lifecycleScope) {
+                setSubtitle(it?.temperature.toString())
             }
         }
     }
@@ -50,30 +50,36 @@ class BotQwenSettingActivity : BaseActivity<ActivitySettingQwenBinding>() {
 
         mBinding.settingQwenRouterApiKey.setOnClickListener {
             lifecycleScope.launchWhenResumed {
-                val builder = EditDialogBuilder("修改", mViewModel.apiKeyFlow.value)
-                val editResult = dialogService.showEditDialog(supportFragmentManager, builder)
-                if (editResult is BaseResult.Success) {
-                    simpleHandleResult(mViewModel.updateApiKey(editResult.value))
+                mViewModel.state.value?.apiKey?.let {
+                    val builder = EditDialogBuilder("修改", it)
+                    val editResult = dialogService.showEditDialog(supportFragmentManager, builder)
+                    if (editResult is BaseResult.Success) {
+                        simpleHandleResult(mViewModel.updateApiKey(editResult.value))
+                    }
                 }
             }
         }
 
         mBinding.settingQwenRouterModel.setOnClickListener {
             lifecycleScope.launchWhenResumed {
-                val builder = EditDialogBuilder("修改", mViewModel.modelFlow.value)
-                val editResult = dialogService.showEditDialog(supportFragmentManager, builder)
-                if (editResult is BaseResult.Success) {
-                    simpleHandleResult(mViewModel.updateModel(editResult.value))
+                mViewModel.state.value?.model?.let {
+                    val builder = EditDialogBuilder("修改", it)
+                    val editResult = dialogService.showEditDialog(supportFragmentManager, builder)
+                    if (editResult is BaseResult.Success) {
+                        simpleHandleResult(mViewModel.updateModel(editResult.value))
+                    }
                 }
             }
         }
 
         mBinding.settingQwenRouterTemperature.setOnClickListener {
             lifecycleScope.launchWhenResumed {
-                val builder = EditDialogBuilder("修改，范围 [0.0, 2.0)", mViewModel.temperatureFlow.value.toString())
-                val editResult = dialogService.showEditDialog(supportFragmentManager, builder)
-                if (editResult is BaseResult.Success) {
-                    simpleHandleResult(mViewModel.updateTemperature(editResult.value))
+                mViewModel.state.value?.temperature?.let {
+                    val builder = EditDialogBuilder("修改，范围 [0.0, 2.0)", it.toString())
+                    val editResult = dialogService.showEditDialog(supportFragmentManager, builder)
+                    if (editResult is BaseResult.Success) {
+                        simpleHandleResult(mViewModel.updateTemperature(editResult.value))
+                    }
                 }
             }
         }

@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import com.willis.ai_assistant3.repo.api.ISettingErnieRepo
 import com.willis.ai_assistant3.repo.impl.SettingErnieRepo
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.withContext
 
 /**
@@ -15,11 +14,7 @@ import kotlinx.coroutines.withContext
 class BotERNIESettingViewModel : ViewModel() {
     private val mRepo: ISettingErnieRepo = SettingErnieRepo()
 
-    val clientIdFlow: StateFlow<String> = mRepo.clientIdFlow
-    val clientSecretFlow: StateFlow<String> = mRepo.clientSecretFlow
-    val accessTokenFlow: StateFlow<String> = mRepo.accessTokenFlow
-    val urlFlow: StateFlow<String> = mRepo.urlFlow
-    val temperatureFlow: StateFlow<Float> = mRepo.temperatureFlow
+    val state = mRepo.state
 
     suspend fun updateClientId(newClientId: String) = withContext(Dispatchers.Default) {
         mRepo.updateClientId(newClientId)

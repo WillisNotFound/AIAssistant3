@@ -6,7 +6,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.willis.ai_assistant3.R
 import com.willis.ai_assistant3.base.BaseActivity
-import com.willis.ai_assistant3.data.db.database.AppDatabase
+import com.willis.ai_assistant3.data.db.database.UserDatabase
 import com.willis.ai_assistant3.databinding.ActivityMainBinding
 import com.willis.ai_assistant3.repo.appRepo
 import com.willis.ai_assistant3.ui.adapter.MainPagerAdapter
@@ -30,13 +30,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         lifecycleScope.launchWhenCreated {
             withContext(Dispatchers.IO) {
                 val phone = appRepo.currentPhoneFlow.value!!
-                AppDatabase.instance.userDetailDao().queryByPhone(phone)?.let {
+                UserDatabase.getInstance(phone).settingSparkDao().queryById(-1)?.let {
                     Spark.initSDK(
                         AppUtils.appContext,
-                        it.sparkAppId,
-                        it.sparkApiKey,
-                        it.sparkApiSecret,
-                        it.sparkTemperature
+                        it.appId,
+                        it.apiKey,
+                        it.apiSecret,
+                        it.temperature
                     )
                 }
             }

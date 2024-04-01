@@ -41,7 +41,7 @@
                 app:router_item_title="APP ID" />
 
             <com.willis.ai_assistant3.widget.RouterItem
-                android:id="@+id/setting_spark_router_app_key"
+                android:id="@+id/setting_spark_router_api_key"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:background_tint="@color/white"
@@ -54,7 +54,7 @@
 
 
             <com.willis.ai_assistant3.widget.RouterItem
-                android:id="@+id/setting_spark_router_app_secret"
+                android:id="@+id/setting_spark_router_api_secret"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:background_tint="@color/white"

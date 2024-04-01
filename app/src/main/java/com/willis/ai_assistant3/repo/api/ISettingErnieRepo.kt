@@ -1,5 +1,6 @@
 package com.willis.ai_assistant3.repo.api
 
+import com.willis.ai_assistant3.data.bean.SettingErnie
 import com.willis.base.data.BaseResult
 import kotlinx.coroutines.flow.StateFlow
 
@@ -9,15 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
  * @date: 2023/12/15
  */
 interface ISettingErnieRepo {
-    val clientIdFlow: StateFlow<String>
-
-    val clientSecretFlow: StateFlow<String>
-
-    val accessTokenFlow: StateFlow<String>
-
-    val urlFlow: StateFlow<String>
-
-    val temperatureFlow: StateFlow<Float>
+    val state: StateFlow<SettingErnie?>
 
     suspend fun updateClientId(newClientId: String): BaseResult<Unit>
 

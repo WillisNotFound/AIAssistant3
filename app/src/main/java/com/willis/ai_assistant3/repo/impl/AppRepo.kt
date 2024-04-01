@@ -1,8 +1,11 @@
 package com.willis.ai_assistant3.repo.impl
 
-import com.willis.ai_assistant3.data.bean.UserDetail
+import com.willis.ai_assistant3.data.bean.SettingErnie
+import com.willis.ai_assistant3.data.bean.SettingQwen
+import com.willis.ai_assistant3.data.bean.SettingSpark
 import com.willis.ai_assistant3.data.bean.UserInfo
 import com.willis.ai_assistant3.data.db.database.AppDatabase
+import com.willis.ai_assistant3.data.db.database.UserDatabase
 import com.willis.ai_assistant3.repo.api.IAppRepo
 import com.willis.base.data.BaseResult
 import com.willis.base.services.kvService
@@ -46,21 +49,9 @@ object AppRepo : IAppRepo {
         return true
     }
 
-    override suspend fun login(phone: String): BaseResult<Unit> {
-        val userInfo = mUserInfoDao.queryByPhone(phone) ?: autoRegister(phone, false)
-        updateLoggedUserPhone(userInfo.phone)
-        mUserInfoDao.insertOrReplace(userInfo.updateLoginMillis())
-        mCurrentPhoneFlow.value = userInfo.phone
-        return BaseResult.Success("欢迎: ${userInfo.nickname}", Unit)
-    }
+    override suspend fun login(phone: String) = realLogin(phone, false)
 
-    override suspend fun adminLogin(): BaseResult<Unit> {
-        val userInfo = mUserInfoDao.queryByPhone("admin") ?: autoRegister("admin", true)
-        updateLoggedUserPhone(userInfo.phone)
-        mUserInfoDao.insertOrReplace(userInfo.updateLoginMillis())
-        mCurrentPhoneFlow.value = userInfo.phone
-        return BaseResult.Success("欢迎: ${userInfo.nickname}", Unit)
-    }
+    override suspend fun adminLogin() = realLogin("admin", false)
 
     override suspend fun logoff(): BaseResult<Unit> {
         updateLoggedUserPhone(null)
@@ -74,17 +65,23 @@ object AppRepo : IAppRepo {
         return login(phone)
     }
 
+    private suspend fun realLogin(phone: String, isAdmin: Boolean): BaseResult<Unit> {
+        val userInfo = mUserInfoDao.queryByPhone(phone) ?: autoRegister(phone, isAdmin)
+        updateLoggedUserPhone(userInfo.phone)
+        mUserInfoDao.insertOrReplace(userInfo.updateLoginMillis())
+        mCurrentPhoneFlow.value = userInfo.phone
+        return BaseResult.Success("欢迎: ${userInfo.nickname}", Unit)
+    }
+
     /**
      * 自动注册
      */
     private suspend fun autoRegister(phone: String, isAdmin: Boolean): UserInfo {
-        val userInfo = UserInfo(
-            phone = phone,
-            nickname = "user-$phone",
-            createMillis = DateUtils.currentMillis(),
-            lastLoginMillis = DateUtils.currentMillis()
-        )
-        val userDetail = UserDetail(
+        val userInfo = insertNewUserInfo(phone)
+        insertDefaultSettingErnie(phone, isAdmin)
+        insertDefaultSettingQwen(phone, isAdmin)
+        insertDefaultSettingSpark(phone, isAdmin)
+/*        val userDetail = UserDetail(
             phone = phone,
             ernieClientId = if (isAdmin) DEFAULT_ERNIE_CLIENT_ID else DEFAULT_ERNIE_CLIENT_ID,
             ernieClientSecret = if (isAdmin) DEFAULT_ERNIE_CLIENT_SECRET else DEFAULT_ERNIE_CLIENT_SECRET,
@@ -100,7 +97,7 @@ object AppRepo : IAppRepo {
             qwenTemperature = DEFAULT_QWEN_TEMPERATURE
         )
         mUserInfoDao.insertOrReplace(userInfo)
-        AppDatabase.instance.userDetailDao().insertOrReplace(userDetail)
+        AppDatabase.instance.userDetailDao().insertOrReplace(userDetail)*/
         return userInfo
     }
 
@@ -116,6 +113,53 @@ object AppRepo : IAppRepo {
      */
     private fun updateLoggedUserPhone(phone: String?) {
         kvService.putString(KEY_CURRENT_USER_PHONE, phone)
+    }
+
+    private suspend fun insertNewUserInfo(phone: String): UserInfo {
+        return UserInfo(
+            phone = phone,
+            nickname = "user-$phone",
+            createMillis = DateUtils.currentMillis(),
+            lastLoginMillis = DateUtils.currentMillis()
+        ).also {
+            mUserInfoDao.insertOrReplace(it)
+        }
+    }
+
+    private suspend fun insertDefaultSettingErnie(phone: String, isAdmin: Boolean) {
+        SettingErnie(
+            chatInfoId = -1L,
+            clientId = DEFAULT_ERNIE_CLIENT_ID,
+            clientSecret = DEFAULT_ERNIE_CLIENT_SECRET,
+            accessToken = DEFAULT_ERNIE_ACCESS_TOKEN,
+            url = DEFAULT_ERNIE_URL,
+            temperature = DEFAULT_ERNIE_TEMPERATURE
+        ).also {
+            UserDatabase.getInstance(phone).settingErnieDao().insertOrReplace(it)
+        }
+    }
+
+    private suspend fun insertDefaultSettingQwen(phone: String, isAdmin: Boolean) {
+        SettingQwen(
+            chatInfoId = -1L,
+            apiKey = if (isAdmin) DEFAULT_QWEN_API_KEY else "",
+            model = if (isAdmin) DEFAULT_QWEN_MODEL else "",
+            temperature = DEFAULT_QWEN_TEMPERATURE
+        ).also {
+            UserDatabase.getInstance(phone).settingQwenDao().insertOrReplace(it)
+        }
+    }
+
+    private suspend fun insertDefaultSettingSpark(phone: String, isAdmin: Boolean) {
+        SettingSpark(
+            chatInfoId = -1L,
+            appId = if (isAdmin) DEFAULT_SPARK_APP_ID else "",
+            apiKey = if (isAdmin) DEFAULT_SPARK_API_KEY else "",
+            apiSecret = if (isAdmin) DEFAULT_SPARK_API_SECRET else "",
+            temperature = DEFAULT_SPARK_TEMPERATURE,
+        ).also {
+            UserDatabase.getInstance(phone).settingSparkDao().insertOrReplace(it)
+        }
     }
 
     private fun UserInfo.updateLoginMillis() = UserInfo(
