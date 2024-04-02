@@ -32,7 +32,7 @@ class TopBar @JvmOverloads constructor(
         typedArray.recycle()
         if (title != null) setTitle(title)
         if (leftBtnSrc != -1) setLeftBtnSrc(leftBtnSrc)
-        if (rightBtnSrc != -1) setLeftBtnSrc(rightBtnSrc)
+        if (rightBtnSrc != -1) setRightBtnSrc(rightBtnSrc)
     }
 
     fun setTitle(title: String) {

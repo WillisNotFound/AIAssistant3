@@ -38,15 +38,15 @@ class MineFragment : BaseFragment<FragmentMineBinding>() {
         }
 
         mBinding.mineRouterErnie.setOnClickListener {
-            startActivity(Intent(requireActivity(), BotERNIESettingActivity::class.java))
+            BotERNIESettingActivity.startAction(requireContext(), -1)
         }
 
         mBinding.mineRouterSpark.setOnClickListener {
-            startActivity(Intent(requireActivity(), BotSparkSettingActivity::class.java))
+            BotSparkSettingActivity.startAction(requireContext(), -1)
         }
 
         mBinding.mineRouterQwen.setOnClickListener {
-            startActivity(Intent(requireActivity(), BotQwenSettingActivity::class.java))
+            BotQwenSettingActivity.startAction(requireContext(), -1)
         }
 
         mBinding.mineRouterAbout.setOnClickListener {

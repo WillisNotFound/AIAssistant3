@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
  * @author willis.yan.ws@gmail.com
  * @date: 2023/12/28
  */
-class SettingQwenRepo : ISettingQwenRepo {
+class SettingQwenRepo(chatInfoId: Long) : ISettingQwenRepo {
     private val mState = MutableStateFlow<SettingQwen?>(null)
     override val state: StateFlow<SettingQwen?> = mState
 
@@ -24,7 +24,7 @@ class SettingQwenRepo : ISettingQwenRepo {
 
     init {
         CoroutineScope(Dispatchers.Default).launch {
-            UserDatabase.getInstance(mPhone).settingQwenDao().queryByChatInfoId(-1)?.let {
+            UserDatabase.getInstance(mPhone).settingQwenDao().queryByChatInfoId(chatInfoId)?.let {
                 mState.value = it
             }
         }

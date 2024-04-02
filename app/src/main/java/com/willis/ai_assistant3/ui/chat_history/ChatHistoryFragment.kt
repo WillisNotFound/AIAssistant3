@@ -61,15 +61,15 @@ class ChatHistoryFragment : BaseFragment<FragmentChatHistoryBinding>() {
         mBinding.chatHistoryFabAdd.setOnClickListener {
             lifecycleScope.launchWhenResumed {
                 val shouldRefresh = when (CreateChatPopup.showOnAnchor(requireContext(), it)) {
-                    1 -> {
+                    0 -> {
                         CreateErnieDialog.show(childFragmentManager)
                     }
 
-                    2 -> {
+                    1 -> {
                         CreateSparkDialog.show(childFragmentManager)
                     }
 
-                    3 -> {
+                    2 -> {
                         CreateQwenDialog.show(childFragmentManager)
                     }
 

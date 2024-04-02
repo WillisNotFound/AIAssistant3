@@ -10,7 +10,8 @@
         android:id="@+id/chat_top_bar"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        app:left_btn_src="@drawable/ic_back_24dp" />
+        app:left_btn_src="@drawable/ic_back_24dp"
+        app:right_btn_src="@drawable/ic_setting_24dp" />
 
     <FrameLayout
         android:layout_width="match_parent"

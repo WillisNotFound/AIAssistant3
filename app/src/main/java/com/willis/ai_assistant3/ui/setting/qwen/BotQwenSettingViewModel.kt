@@ -11,8 +11,8 @@ import kotlinx.coroutines.withContext
  * @author willis.yan.ws@gmail.com
  * @date: 2023/12/28
  */
-class BotQwenSettingViewModel : ViewModel() {
-    private val mRepo: ISettingQwenRepo = SettingQwenRepo()
+class BotQwenSettingViewModel(chatInfoId: Long) : ViewModel() {
+    private val mRepo: ISettingQwenRepo = SettingQwenRepo(chatInfoId)
 
     val state = mRepo.state
 

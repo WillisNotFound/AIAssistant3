@@ -16,14 +16,14 @@ import kotlinx.coroutines.launch
  * @author willis.yan.ws@gmail.com
  * @date: 2023/12/15
  */
-class SettingSparkRepo : ISettingSparkRepo {
+class SettingSparkRepo(chatInfoId: Long) : ISettingSparkRepo {
     private val mState = MutableStateFlow<SettingSpark?>(null)
     override val state: StateFlow<SettingSpark?> = mState
     private val mPhone get() = appRepo.currentPhoneFlow.value!!
 
     init {
         CoroutineScope(Dispatchers.Default).launch {
-            UserDatabase.getInstance(mPhone).settingSparkDao().queryByChatInfoId(-1)?.let {
+            UserDatabase.getInstance(mPhone).settingSparkDao().queryByChatInfoId(chatInfoId)?.let {
                 mState.value = it
             }
         }

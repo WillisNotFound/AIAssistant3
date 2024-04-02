@@ -1,10 +1,16 @@
 package com.willis.ai_assistant3.ui.setting.spark
 
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import androidx.activity.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.willis.ai_assistant3.base.BaseActivity
 import com.willis.ai_assistant3.databinding.ActivitySettingSparkBinding
+import com.willis.ai_assistant3.ui.setting.ernie.BotERNIESettingActivity
+import com.willis.ai_assistant3.ui.setting.ernie.BotERNIESettingViewModel
 import com.willis.base.data.BaseResult
 import com.willis.base.dialog.EditDialogBuilder
 import com.willis.base.ext.collectWhenResumed
@@ -17,9 +23,25 @@ import com.willis.base.services.toastService
  * @date: 2023/12/15
  */
 class BotSparkSettingActivity : BaseActivity<ActivitySettingSparkBinding>() {
+    companion object {
+        private const val EXTRA_CHAT_INFO_ID = "chat_info_id"
+
+        fun startAction(context: Context, chatInfoId: Long) {
+            val intent = Intent(context, BotSparkSettingActivity::class.java)
+            intent.putExtra(EXTRA_CHAT_INFO_ID, chatInfoId)
+            context.startActivity(intent)
+        }
+    }
+
     override val isLightStatusBar = true
 
-    private val mViewModel by viewModels<BotSparkSettingViewModel>()
+    private val mViewModel by viewModels<BotSparkSettingViewModel>(factoryProducer = {
+        object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                return BotSparkSettingViewModel(intent.getLongExtra(EXTRA_CHAT_INFO_ID, 0)) as T
+            }
+        }
+    })
 
     override fun inflateBinding(layoutInflater: LayoutInflater) = ActivitySettingSparkBinding.inflate(layoutInflater)
 

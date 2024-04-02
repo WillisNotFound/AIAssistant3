@@ -11,8 +11,8 @@ import kotlinx.coroutines.withContext
  * @author willis.yan.ws@gmail.com
  * @date: 2023/12/15
  */
-class BotSparkSettingViewModel : ViewModel() {
-    private val mRepo: ISettingSparkRepo = SettingSparkRepo()
+class BotSparkSettingViewModel(chatInfoId: Long) : ViewModel() {
+    private val mRepo: ISettingSparkRepo = SettingSparkRepo(chatInfoId)
 
     val state = mRepo.state
 

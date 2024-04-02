@@ -11,8 +11,8 @@ import kotlinx.coroutines.withContext
  * @author willis.yan.ws@gmail.com
  * @date: 2023/12/15
  */
-class BotERNIESettingViewModel : ViewModel() {
-    private val mRepo: ISettingErnieRepo = SettingErnieRepo()
+class BotERNIESettingViewModel(chatInfoId: Long) : ViewModel() {
+    private val mRepo: ISettingErnieRepo = SettingErnieRepo(chatInfoId)
 
     val state = mRepo.state
 

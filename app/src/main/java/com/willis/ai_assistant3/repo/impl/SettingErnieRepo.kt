@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
  * @author willis.yan.ws@gmail.com
  * @date: 2023/12/15
  */
-class SettingErnieRepo : ISettingErnieRepo {
+class SettingErnieRepo(private val chatInfoId: Long) : ISettingErnieRepo {
     private val mState = MutableStateFlow<SettingErnie?>(null)
     override val state: StateFlow<SettingErnie?> = mState
 
@@ -25,7 +25,7 @@ class SettingErnieRepo : ISettingErnieRepo {
 
     init {
         CoroutineScope(Dispatchers.Default).launch {
-            UserDatabase.getInstance(mPhone).settingErnieDao().queryByChatInfoId(-1)?.let {
+            UserDatabase.getInstance(mPhone).settingErnieDao().queryByChatInfoId(chatInfoId)?.let {
                 mState.value = it
             }
         }

@@ -16,6 +16,9 @@ import com.willis.ai_assistant3.base.BaseActivity
 import com.willis.ai_assistant3.data.bean.ChatInfo
 import com.willis.ai_assistant3.databinding.ActivityChatBinding
 import com.willis.ai_assistant3.ui.adapter.ChatMessageAdapter
+import com.willis.ai_assistant3.ui.setting.ernie.BotERNIESettingActivity
+import com.willis.ai_assistant3.ui.setting.qwen.BotQwenSettingActivity
+import com.willis.ai_assistant3.ui.setting.spark.BotSparkSettingActivity
 import com.willis.base.ext.addOnTextChangeListener
 import com.willis.base.ext.collectWhenResumed
 import com.willis.base.ext.gone
@@ -132,6 +135,22 @@ class ChatActivity : BaseActivity<ActivityChatBinding>(), OnGlobalLayoutListener
     override fun initListener() {
         mBinding.chatTopBar.setLeftBtnOnClickListener {
             finish()
+        }
+
+        mBinding.chatTopBar.setRightBtnOnClickListener {
+            when(intent.getIntExtra(EXTRA_CHAT_INFO_TYPE, -1)) {
+                0 -> {
+                    BotERNIESettingActivity.startAction(this, intent.getLongExtra(EXTRA_CHAT_INFO_ID, 0))
+                }
+
+                1 -> {
+                    BotSparkSettingActivity.startAction(this, intent.getLongExtra(EXTRA_CHAT_INFO_ID, 0))
+                }
+
+                2 -> {
+                    BotQwenSettingActivity.startAction(this, intent.getLongExtra(EXTRA_CHAT_INFO_ID, 0))
+                }
+            }
         }
 
         mBinding.chatRecyclerview.addOnItemTouchListener(object : RecyclerView.SimpleOnItemTouchListener() {
