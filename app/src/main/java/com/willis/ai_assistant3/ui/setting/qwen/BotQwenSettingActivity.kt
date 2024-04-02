@@ -55,21 +55,18 @@ class BotQwenSettingActivity : BaseActivity<ActivitySettingQwenBinding>() {
         ActivitySettingQwenBinding.inflate(layoutInflater)
 
     override fun initView() {
-        mBinding.settingQwenTopBar.setTitle("设置")
+        if (mEnterFrom == BotERNIESettingActivity.ENTER_FROM_CHAT) {
+            mBinding.settingQwenTopBar.setTitle("设置")
+            mBinding.settingQwenGlobal.gone()
+        }
 
         mBinding.settingQwenRouterApiKey.apply {
-            if (mEnterFrom == BotERNIESettingActivity.ENTER_FROM_CHAT) {
-                gone()
-            }
             mViewModel.state.collectWhenResumed(lifecycleScope) {
                 setSubtitle(it?.apiKey)
             }
         }
 
         mBinding.settingQwenRouterModel.apply {
-            if (mEnterFrom == BotERNIESettingActivity.ENTER_FROM_CHAT) {
-                setBackgroundType(RouterItem.BG_TYPE_TOP)
-            }
             mViewModel.state.collectWhenResumed(lifecycleScope) {
                 setSubtitle(it?.model)
             }

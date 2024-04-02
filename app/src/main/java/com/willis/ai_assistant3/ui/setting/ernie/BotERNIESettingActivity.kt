@@ -57,39 +57,30 @@ class BotERNIESettingActivity : BaseActivity<ActivitySettingErnieBinding>() {
         ActivitySettingErnieBinding.inflate(layoutInflater)
 
     override fun initView() {
-        mBinding.settingErnieTopBar.setTitle("设置")
+        if (mEnterFrom == ENTER_FROM_CHAT) {
+            mBinding.settingErnieTopBar.setTitle("设置")
+            mBinding.settingErnieGlobal.gone()
+        }
 
         mBinding.settingErnieRouterClientId.apply {
-            if (mEnterFrom == ENTER_FROM_CHAT) {
-                gone()
-            }
             mViewModel.state.collectWhenResumed(lifecycleScope) {
                 setSubtitle(it?.clientId)
             }
         }
 
         mBinding.settingErnieRouterClientSecret.apply {
-            if (mEnterFrom == ENTER_FROM_CHAT) {
-                gone()
-            }
             mViewModel.state.collectWhenResumed(lifecycleScope) {
                 setSubtitle(it?.clientSecret)
             }
         }
 
         mBinding.settingErnieRouterAccessToken.apply {
-            if (mEnterFrom == ENTER_FROM_CHAT) {
-                gone()
-            }
             mViewModel.state.collectWhenResumed(lifecycleScope) {
                 setSubtitle(it?.accessToken)
             }
         }
 
         mBinding.settingErnieRouterUrl.apply {
-            if (mEnterFrom == ENTER_FROM_CHAT) {
-                setBackgroundType(RouterItem.BG_TYPE_TOP)
-            }
             mViewModel.state.collectWhenResumed(lifecycleScope) {
                 setSubtitle(it?.url)
             }

@@ -24,58 +24,88 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="12dp" />
-
-            <com.willis.ai_assistant3.widget.RouterItem
-                android:id="@+id/setting_spark_router_app_id"
+            <LinearLayout
+                android:id="@+id/setting_spark_global"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:background_tint="@color/white"
-                app:background_type="top"
-                app:end_imv_src="@drawable/ic_edit_24dp"
-                app:show_end_imv="false"
-                app:show_start_imv="false"
-                app:show_title_end_imv="true"
-                app:router_item_title="APP ID" />
+                android:orientation="vertical">
 
-            <com.willis.ai_assistant3.widget.RouterItem
-                android:id="@+id/setting_spark_router_api_key"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:gravity="center_vertical"
+                    android:text="全局配置"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <com.willis.ai_assistant3.widget.RouterItem
+                    android:id="@+id/setting_spark_router_app_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:background_tint="@color/white"
+                    app:background_type="top"
+                    app:end_imv_src="@drawable/ic_edit_24dp"
+                    app:show_end_imv="true"
+                    app:show_start_imv="false"
+                    app:show_title_end_imv="false"
+                    app:router_item_title="APP ID" />
+
+                <com.willis.ai_assistant3.widget.RouterItem
+                    android:id="@+id/setting_spark_router_api_key"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:background_tint="@color/white"
+                    app:background_type="center"
+                    app:end_imv_src="@drawable/ic_edit_24dp"
+                    app:show_end_imv="true"
+                    app:show_start_imv="false"
+                    app:show_title_end_imv="false"
+                    app:router_item_title="API KEY" />
+
+
+                <com.willis.ai_assistant3.widget.RouterItem
+                    android:id="@+id/setting_spark_router_api_secret"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:background_tint="@color/white"
+                    app:background_type="bottom"
+                    app:end_imv_src="@drawable/ic_edit_24dp"
+                    app:show_end_imv="true"
+                    app:show_start_imv="false"
+                    app:show_title_end_imv="false"
+                    app:router_item_title="API SECRET" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:background_tint="@color/white"
-                app:background_type="center"
-                app:end_imv_src="@drawable/ic_edit_24dp"
-                app:show_end_imv="true"
-                app:show_start_imv="false"
-                app:show_title_end_imv="false"
-                app:router_item_title="API KEY" />
+                android:orientation="vertical">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:gravity="center_vertical"
+                    android:text="对话配置"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
-            <com.willis.ai_assistant3.widget.RouterItem
-                android:id="@+id/setting_spark_router_api_secret"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:background_tint="@color/white"
-                app:background_type="center"
-                app:end_imv_src="@drawable/ic_edit_24dp"
-                app:show_end_imv="true"
-                app:show_start_imv="false"
-                app:show_title_end_imv="false"
-                app:router_item_title="API SECRET" />
+                <com.willis.ai_assistant3.widget.RouterItem
+                    android:id="@+id/setting_spark_router_temperature"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:background_tint="@color/white"
+                    app:background_type="bottom"
+                    app:end_imv_src="@drawable/ic_edit_24dp"
+                    app:show_end_imv="true"
+                    app:show_start_imv="false"
+                    app:show_title_end_imv="false"
+                    app:router_item_title="TEMPERATURE" />
 
-            <com.willis.ai_assistant3.widget.RouterItem
-                android:id="@+id/setting_spark_router_temperature"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:background_tint="@color/white"
-                app:background_type="bottom"
-                app:end_imv_src="@drawable/ic_edit_24dp"
-                app:show_end_imv="true"
-                app:show_start_imv="false"
-                app:show_title_end_imv="false"
-                app:router_item_title="TEMPERATURE" />
+            </LinearLayout>
+
         </LinearLayout>
+
     </androidx.core.widget.NestedScrollView>
+
 </LinearLayout>

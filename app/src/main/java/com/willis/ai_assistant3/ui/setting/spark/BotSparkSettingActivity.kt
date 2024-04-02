@@ -54,39 +54,30 @@ class BotSparkSettingActivity : BaseActivity<ActivitySettingSparkBinding>() {
     override fun inflateBinding(layoutInflater: LayoutInflater) = ActivitySettingSparkBinding.inflate(layoutInflater)
 
     override fun initView() {
-        mBinding.settingSparkTopBar.setTitle("设置")
+        if (mEnterFrom == BotERNIESettingActivity.ENTER_FROM_CHAT) {
+            mBinding.settingSparkTopBar.setTitle("设置")
+            mBinding.settingSparkGlobal.gone()
+        }
 
         mBinding.settingSparkRouterAppId.apply {
-            if (mEnterFrom == BotERNIESettingActivity.ENTER_FROM_CHAT) {
-                gone()
-            }
             mViewModel.state.collectWhenResumed(lifecycleScope) {
                 setSubtitle(it?.appId)
             }
         }
 
         mBinding.settingSparkRouterApiKey.apply {
-            if (mEnterFrom == BotERNIESettingActivity.ENTER_FROM_CHAT) {
-                gone()
-            }
             mViewModel.state.collectWhenResumed(lifecycleScope) {
                 setSubtitle(it?.apiKey)
             }
         }
 
         mBinding.settingSparkRouterApiSecret.apply {
-            if (mEnterFrom == BotERNIESettingActivity.ENTER_FROM_CHAT) {
-                gone()
-            }
             mViewModel.state.collectWhenResumed(lifecycleScope) {
                 setSubtitle(it?.apiSecret)
             }
         }
 
         mBinding.settingSparkRouterTemperature.apply {
-            if (mEnterFrom == BotERNIESettingActivity.ENTER_FROM_CHAT) {
-                setBackgroundType(RouterItem.BG_TYPE_AROUND)
-            }
             mViewModel.state.collectWhenResumed(lifecycleScope) {
                 setSubtitle(it?.temperature.toString())
             }
