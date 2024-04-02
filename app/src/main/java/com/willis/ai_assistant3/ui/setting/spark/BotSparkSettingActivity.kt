@@ -11,9 +11,11 @@ import com.willis.ai_assistant3.base.BaseActivity
 import com.willis.ai_assistant3.databinding.ActivitySettingSparkBinding
 import com.willis.ai_assistant3.ui.setting.ernie.BotERNIESettingActivity
 import com.willis.ai_assistant3.ui.setting.ernie.BotERNIESettingViewModel
+import com.willis.ai_assistant3.widget.RouterItem
 import com.willis.base.data.BaseResult
 import com.willis.base.dialog.EditDialogBuilder
 import com.willis.base.ext.collectWhenResumed
+import com.willis.base.ext.gone
 import com.willis.base.services.dialogService
 import com.willis.base.services.toastService
 
@@ -25,10 +27,15 @@ import com.willis.base.services.toastService
 class BotSparkSettingActivity : BaseActivity<ActivitySettingSparkBinding>() {
     companion object {
         private const val EXTRA_CHAT_INFO_ID = "chat_info_id"
+        private const val EXTRA_ENTER_FROM = "enter_from"
 
-        fun startAction(context: Context, chatInfoId: Long) {
+        const val ENTER_FROM_CHAT = "chat"
+        const val ENTER_FROM_MINE = "mine"
+
+        fun startAction(context: Context, chatInfoId: Long, enterFrom: String) {
             val intent = Intent(context, BotSparkSettingActivity::class.java)
             intent.putExtra(EXTRA_CHAT_INFO_ID, chatInfoId)
+            intent.putExtra(EXTRA_ENTER_FROM, enterFrom)
             context.startActivity(intent)
         }
     }
@@ -42,29 +49,44 @@ class BotSparkSettingActivity : BaseActivity<ActivitySettingSparkBinding>() {
             }
         }
     })
+    private val mEnterFrom get() = intent.getStringExtra(EXTRA_ENTER_FROM) ?: ENTER_FROM_MINE
 
     override fun inflateBinding(layoutInflater: LayoutInflater) = ActivitySettingSparkBinding.inflate(layoutInflater)
 
     override fun initView() {
+        mBinding.settingSparkTopBar.setTitle("设置")
+
         mBinding.settingSparkRouterAppId.apply {
+            if (mEnterFrom == BotERNIESettingActivity.ENTER_FROM_CHAT) {
+                gone()
+            }
             mViewModel.state.collectWhenResumed(lifecycleScope) {
                 setSubtitle(it?.appId)
             }
         }
 
         mBinding.settingSparkRouterApiKey.apply {
+            if (mEnterFrom == BotERNIESettingActivity.ENTER_FROM_CHAT) {
+                gone()
+            }
             mViewModel.state.collectWhenResumed(lifecycleScope) {
                 setSubtitle(it?.apiKey)
             }
         }
 
         mBinding.settingSparkRouterApiSecret.apply {
+            if (mEnterFrom == BotERNIESettingActivity.ENTER_FROM_CHAT) {
+                gone()
+            }
             mViewModel.state.collectWhenResumed(lifecycleScope) {
                 setSubtitle(it?.apiSecret)
             }
         }
 
         mBinding.settingSparkRouterTemperature.apply {
+            if (mEnterFrom == BotERNIESettingActivity.ENTER_FROM_CHAT) {
+                setBackgroundType(RouterItem.BG_TYPE_AROUND)
+            }
             mViewModel.state.collectWhenResumed(lifecycleScope) {
                 setSubtitle(it?.temperature.toString())
             }

@@ -140,15 +140,27 @@ class ChatActivity : BaseActivity<ActivityChatBinding>(), OnGlobalLayoutListener
         mBinding.chatTopBar.setRightBtnOnClickListener {
             when(intent.getIntExtra(EXTRA_CHAT_INFO_TYPE, -1)) {
                 0 -> {
-                    BotERNIESettingActivity.startAction(this, intent.getLongExtra(EXTRA_CHAT_INFO_ID, 0))
+                    BotERNIESettingActivity.startAction(
+                        this,
+                        intent.getLongExtra(EXTRA_CHAT_INFO_ID, 0),
+                        BotERNIESettingActivity.ENTER_FROM_CHAT
+                    )
                 }
 
                 1 -> {
-                    BotSparkSettingActivity.startAction(this, intent.getLongExtra(EXTRA_CHAT_INFO_ID, 0))
+                    BotSparkSettingActivity.startAction(
+                        this,
+                        intent.getLongExtra(EXTRA_CHAT_INFO_ID, 0),
+                        BotSparkSettingActivity.ENTER_FROM_CHAT
+                    )
                 }
 
                 2 -> {
-                    BotQwenSettingActivity.startAction(this, intent.getLongExtra(EXTRA_CHAT_INFO_ID, 0))
+                    BotQwenSettingActivity.startAction(
+                        this,
+                        intent.getLongExtra(EXTRA_CHAT_INFO_ID, 0),
+                        BotQwenSettingActivity.ENTER_FROM_CHAT
+                    )
                 }
             }
         }

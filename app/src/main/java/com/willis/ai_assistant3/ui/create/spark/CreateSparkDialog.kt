@@ -39,9 +39,9 @@ class CreateSparkDialog : BaseDialog<DialogCreateSparkBinding>() {
 
     private val mType = 1
     private var mNickname = ""
-    private var mAppId = ""
-    private var mApiKey = ""
-    private var mApiSecret = ""
+//    private var mAppId = ""
+//    private var mApiKey = ""
+//    private var mApiSecret = ""
     private var mTemperature = 0.8F
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -76,9 +76,9 @@ class CreateSparkDialog : BaseDialog<DialogCreateSparkBinding>() {
     override fun initView() {
         lifecycleScope.launchWhenResumed {
             mViewModel.getDefaultSetting()?.let {
-                mAppId = it.appId
-                mApiKey = it.apiKey
-                mApiSecret= it.apiSecret
+//                mAppId = it.appId
+//                mApiKey = it.apiKey
+//                mApiSecret= it.apiSecret
                 mTemperature = it.temperature
                 mBinding.createSparkEdtAppId.setText(it.appId)
                 mBinding.createSparkEdtApiKey.setText(it.apiKey)
@@ -104,17 +104,17 @@ class CreateSparkDialog : BaseDialog<DialogCreateSparkBinding>() {
             mNickname = it?.toString() ?: ""
         }
 
-        mBinding.createSparkEdtAppId.addOnTextChangeListener {
-            mAppId = it?.toString() ?: ""
-        }
-
-        mBinding.createSparkEdtApiKey.addOnTextChangeListener {
-            mApiKey = it?.toString() ?: ""
-        }
-
-        mBinding.createSparkEdtApiSecret.addOnTextChangeListener {
-            mApiSecret = it?.toString() ?: ""
-        }
+//        mBinding.createSparkEdtAppId.addOnTextChangeListener {
+//            mAppId = it?.toString() ?: ""
+//        }
+//
+//        mBinding.createSparkEdtApiKey.addOnTextChangeListener {
+//            mApiKey = it?.toString() ?: ""
+//        }
+//
+//        mBinding.createSparkEdtApiSecret.addOnTextChangeListener {
+//            mApiSecret = it?.toString() ?: ""
+//        }
 
         mBinding.createSparkEdtTemperature.addOnTextChangeListener {
             mTemperature = it?.toString()?.toFloatOrNull() ?: 0.8F
@@ -131,9 +131,9 @@ class CreateSparkDialog : BaseDialog<DialogCreateSparkBinding>() {
 
     private fun createSettingSpark(chatInfoId: Long) = SettingSpark(
         chatInfoId = chatInfoId,
-        appId = mAppId,
-        apiKey = mApiKey,
-        apiSecret = mApiSecret,
+        appId = "",
+        apiKey = "",
+        apiSecret = "",
         temperature = mTemperature
     )
 }

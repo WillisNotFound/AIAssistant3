@@ -39,7 +39,7 @@ class CreateQwenDialog: BaseDialog<DialogCreateQwenBinding>() {
 
     private val mType = 2
     private var mNickname = ""
-    private var mApiKey = ""
+//    private var mApiKey = ""
     private var mModel = ""
     private var mTemperature = 0.8F
 
@@ -75,7 +75,7 @@ class CreateQwenDialog: BaseDialog<DialogCreateQwenBinding>() {
     override fun initView() {
         lifecycleScope.launchWhenResumed {
             mViewModel.getDefaultSetting()?.let {
-                mApiKey = it.apiKey
+//                mApiKey = it.apiKey
                 mModel = it.model
                 mTemperature = it.temperature
                 mBinding.createQwenEdtApiKey.setText(it.apiKey)
@@ -101,9 +101,9 @@ class CreateQwenDialog: BaseDialog<DialogCreateQwenBinding>() {
             mNickname = it?.toString() ?: ""
         }
 
-        mBinding.createQwenEdtApiKey.addOnTextChangeListener {
-            mApiKey = it?.toString() ?: ""
-        }
+//        mBinding.createQwenEdtApiKey.addOnTextChangeListener {
+//            mApiKey = it?.toString() ?: ""
+//        }
 
         mBinding.createQwenEdtModel.addOnTextChangeListener {
             mModel = it?.toString() ?: ""
@@ -124,7 +124,7 @@ class CreateQwenDialog: BaseDialog<DialogCreateQwenBinding>() {
 
     private fun createSettingQwen(chatInfoId: Long) = SettingQwen(
         chatInfoId = chatInfoId,
-        apiKey = mApiKey,
+        apiKey = "",
         model = mModel,
         temperature = mTemperature
     )

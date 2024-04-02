@@ -12,10 +12,12 @@ import com.willis.ai_assistant3.data.bean.ChatInfo
 import com.willis.ai_assistant3.databinding.ActivitySettingErnieBinding
 import com.willis.ai_assistant3.ui.chat.ChatActivity
 import com.willis.ai_assistant3.ui.chat.ChatViewModel
+import com.willis.ai_assistant3.widget.RouterItem
 import com.willis.base.data.BaseResult
 import com.willis.base.dialog.ConfirmDialogBuilder
 import com.willis.base.dialog.EditDialogBuilder
 import com.willis.base.ext.collectWhenResumed
+import com.willis.base.ext.gone
 import com.willis.base.services.dialogService
 import com.willis.base.services.toastService
 
@@ -27,10 +29,15 @@ import com.willis.base.services.toastService
 class BotERNIESettingActivity : BaseActivity<ActivitySettingErnieBinding>() {
     companion object {
         private const val EXTRA_CHAT_INFO_ID = "chat_info_id"
+        private const val EXTRA_ENTER_FROM = "enter_from"
 
-        fun startAction(context: Context, chatInfoId: Long) {
+        const val ENTER_FROM_CHAT = "chat"
+        const val ENTER_FROM_MINE = "mine"
+
+        fun startAction(context: Context, chatInfoId: Long, enterFrom: String) {
             val intent = Intent(context, BotERNIESettingActivity::class.java)
             intent.putExtra(EXTRA_CHAT_INFO_ID, chatInfoId)
+            intent.putExtra(EXTRA_ENTER_FROM, enterFrom)
             context.startActivity(intent)
         }
     }
@@ -44,30 +51,45 @@ class BotERNIESettingActivity : BaseActivity<ActivitySettingErnieBinding>() {
             }
         }
     })
+    private val mEnterFrom get() = intent.getStringExtra(EXTRA_ENTER_FROM) ?: ENTER_FROM_MINE
 
     override fun inflateBinding(layoutInflater: LayoutInflater) =
         ActivitySettingErnieBinding.inflate(layoutInflater)
 
     override fun initView() {
+        mBinding.settingErnieTopBar.setTitle("设置")
+
         mBinding.settingErnieRouterClientId.apply {
+            if (mEnterFrom == ENTER_FROM_CHAT) {
+                gone()
+            }
             mViewModel.state.collectWhenResumed(lifecycleScope) {
                 setSubtitle(it?.clientId)
             }
         }
 
         mBinding.settingErnieRouterClientSecret.apply {
+            if (mEnterFrom == ENTER_FROM_CHAT) {
+                gone()
+            }
             mViewModel.state.collectWhenResumed(lifecycleScope) {
                 setSubtitle(it?.clientSecret)
             }
         }
 
         mBinding.settingErnieRouterAccessToken.apply {
+            if (mEnterFrom == ENTER_FROM_CHAT) {
+                gone()
+            }
             mViewModel.state.collectWhenResumed(lifecycleScope) {
                 setSubtitle(it?.accessToken)
             }
         }
 
         mBinding.settingErnieRouterUrl.apply {
+            if (mEnterFrom == ENTER_FROM_CHAT) {
+                setBackgroundType(RouterItem.BG_TYPE_TOP)
+            }
             mViewModel.state.collectWhenResumed(lifecycleScope) {
                 setSubtitle(it?.url)
             }

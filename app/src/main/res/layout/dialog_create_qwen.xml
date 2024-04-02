@@ -78,6 +78,7 @@
                 android:textColorHint="@color/blue_400"
                 app:boxBackgroundColor="@color/white"
                 app:boxCornerRadiusBottomEnd="12dp"
+                android:visibility="gone"
                 app:boxCornerRadiusBottomStart="12dp"
                 app:boxCornerRadiusTopEnd="12dp"
                 app:boxCornerRadiusTopStart="12dp"
