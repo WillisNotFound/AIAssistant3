@@ -43,17 +43,17 @@ class CreateChatPopup(context: Context) : PopupWindow(context) {
 
     private fun initListener() {
         mBinding.createChatImvErnie.setOnClickListener {
-            mType = 1
+            mType = 0
             dismiss()
         }
 
         mBinding.createChatImvSpark.setOnClickListener {
-            mType = 2
+            mType = 1
             dismiss()
         }
 
         mBinding.createChatImvQwen.setOnClickListener {
-            mType = 3
+            mType = 2
             dismiss()
         }
 

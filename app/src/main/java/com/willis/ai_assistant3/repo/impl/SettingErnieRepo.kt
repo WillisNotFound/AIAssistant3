@@ -1,10 +1,14 @@
 package com.willis.ai_assistant3.repo.impl
 
+import com.willis.ai_assistant3.R
 import com.willis.ai_assistant3.data.bean.SettingErnie
 import com.willis.ai_assistant3.data.db.database.UserDatabase
 import com.willis.ai_assistant3.repo.api.ISettingErnieRepo
 import com.willis.ai_assistant3.repo.appRepo
 import com.willis.base.data.BaseResult
+import com.willis.base.services.toastService
+import com.willis.base.utils.AppUtils
+import com.willis.base.utils.NetworkUtils
 import com.willis.ernie.Ernie
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -40,6 +44,9 @@ class SettingErnieRepo(private val chatInfoId: Long) : ISettingErnieRepo {
     }
 
     override suspend fun refreshAccessToken(): BaseResult<Unit> {
+        if (!NetworkUtils.isNetworkUsable(AppUtils.appContext)) {
+            return BaseResult.Failure(AppUtils.getString(R.string.app_network_unusable))
+        }
         mState.value?.let {
             return when (val refreshResult = Ernie.refreshAccessToken(it.clientId, it.clientSecret)) {
                 is BaseResult.Success -> updateAccessToken(refreshResult.value)

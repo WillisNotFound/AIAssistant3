@@ -100,6 +100,10 @@ class CreateSparkDialog : BaseDialog<DialogCreateSparkBinding>() {
             }
         }
 
+        mBinding.createSparkEdtNickname.addOnTextChangeListener {
+            mNickname = it?.toString() ?: ""
+        }
+
         mBinding.createSparkEdtAppId.addOnTextChangeListener {
             mAppId = it?.toString() ?: ""
         }

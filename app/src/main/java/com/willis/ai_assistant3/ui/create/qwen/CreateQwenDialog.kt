@@ -97,6 +97,10 @@ class CreateQwenDialog: BaseDialog<DialogCreateQwenBinding>() {
             }
         }
 
+        mBinding.createQwenEdtNickname.addOnTextChangeListener {
+            mNickname = it?.toString() ?: ""
+        }
+
         mBinding.createQwenEdtApiKey.addOnTextChangeListener {
             mApiKey = it?.toString() ?: ""
         }

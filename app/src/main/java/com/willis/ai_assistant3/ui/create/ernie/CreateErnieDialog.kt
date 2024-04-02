@@ -101,6 +101,10 @@ class CreateErnieDialog : BaseDialog<DialogCreateErnieBinding>() {
             }
         }
 
+        mBinding.createErnieEdtNickname.addOnTextChangeListener {
+            mNickname = it?.toString() ?: ""
+        }
+
         mBinding.createErnieEdtUrl.addOnTextChangeListener {
             mUrl = it?.toString() ?: ""
         }
