@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.PopupWindow
 import com.willis.ai_assistant3.R
-import com.willis.ai_assistant3.databinding.DialogDeleteChatBinding
+import com.willis.ai_assistant3.databinding.PopupDeleteChatBinding
 import com.willis.base.ext.dp
 import com.willis.base.ext.rectInWindow
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -31,8 +31,8 @@ class DeleteChatPopup(context: Context) : PopupWindow(context) {
         }
     }
 
-    private var _binding: DialogDeleteChatBinding? = null
-    private val mBinding: DialogDeleteChatBinding get() = _binding!!
+    private var _binding: PopupDeleteChatBinding? = null
+    private val mBinding: PopupDeleteChatBinding get() = _binding!!
 
     var mContinuation: Continuation<Boolean>? = null
     private var mIsDelete = false
@@ -44,7 +44,7 @@ class DeleteChatPopup(context: Context) : PopupWindow(context) {
         isFocusable = true
         setBackgroundDrawable(ColorDrawable())
         animationStyle = R.style.Base_FadePopupAnimation
-        _binding = DialogDeleteChatBinding.inflate(LayoutInflater.from(context))
+        _binding = PopupDeleteChatBinding.inflate(LayoutInflater.from(context))
         contentView = mBinding.root
         initListener()
     }

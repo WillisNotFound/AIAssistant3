@@ -8,7 +8,10 @@ import com.willis.ai_assistant3.base.BaseFragment
 import com.willis.ai_assistant3.databinding.FragmentChatHistoryBinding
 import com.willis.ai_assistant3.ui.adapter.ChatHistoryAdapter
 import com.willis.ai_assistant3.ui.chat.ChatActivity
-import com.willis.ai_assistant3.ui.dialog.CreateChatDialog
+import com.willis.ai_assistant3.ui.create.ernie.CreateErnieDialog
+import com.willis.ai_assistant3.ui.create.qwen.CreateQwenDialog
+import com.willis.ai_assistant3.ui.create.spark.CreateSparkDialog
+import com.willis.ai_assistant3.ui.dialog.CreateChatPopup
 import com.willis.ai_assistant3.ui.dialog.DeleteChatPopup
 import com.willis.base.data.BaseResult
 import com.willis.base.dialog.ConfirmDialogBuilder
@@ -57,8 +60,22 @@ class ChatHistoryFragment : BaseFragment<FragmentChatHistoryBinding>() {
 
         mBinding.chatHistoryFabAdd.setOnClickListener {
             lifecycleScope.launchWhenResumed {
-                val chatInfo = CreateChatDialog.show(childFragmentManager)
-                if (chatInfo != null) mViewModel.addChatHistory(chatInfo)
+                val shouldRefresh = when (CreateChatPopup.showOnAnchor(requireContext(), it)) {
+                    1 -> {
+                        CreateErnieDialog.show(childFragmentManager)
+                    }
+
+                    2 -> {
+                        CreateSparkDialog.show(childFragmentManager)
+                    }
+
+                    3 -> {
+                        CreateQwenDialog.show(childFragmentManager)
+                    }
+
+                    else -> false
+                }
+                if (shouldRefresh) mViewModel.refreshChatHistory()
             }
         }
 
