@@ -39,9 +39,10 @@ class CreateQwenDialog: BaseDialog<DialogCreateQwenBinding>() {
 
     private val mType = 2
     private var mNickname = ""
-//    private var mApiKey = ""
     private var mModel = ""
     private var mTemperature = 0.8F
+    private var mEnableSearch = false
+    private var mContextTimes = 4
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return super.onCreateDialog(savedInstanceState).apply {
@@ -81,6 +82,8 @@ class CreateQwenDialog: BaseDialog<DialogCreateQwenBinding>() {
                 mBinding.createQwenEdtApiKey.setText(it.apiKey)
                 mBinding.createQwenEdtModel.setText(it.model)
                 mBinding.createQwenEdtTemperature.setText(it.temperature.toString())
+                mBinding.createQwenSwitchEnableSearch.isChecked = it.enableSearch
+                mBinding.createQwenEdtContextTimes.setText(it.contextTimes.toString())
             }
         }
     }
@@ -101,16 +104,20 @@ class CreateQwenDialog: BaseDialog<DialogCreateQwenBinding>() {
             mNickname = it?.toString() ?: ""
         }
 
-//        mBinding.createQwenEdtApiKey.addOnTextChangeListener {
-//            mApiKey = it?.toString() ?: ""
-//        }
-
         mBinding.createQwenEdtModel.addOnTextChangeListener {
             mModel = it?.toString() ?: ""
         }
 
         mBinding.createQwenEdtTemperature.addOnTextChangeListener {
             mTemperature = it?.toString()?.toFloatOrNull() ?: 0.8F
+        }
+
+        mBinding.createQwenSwitchEnableSearch.setOnCheckedChangeListener { _, isChecked ->
+            mEnableSearch = isChecked
+        }
+
+        mBinding.createQwenEdtContextTimes.addOnTextChangeListener {
+            mContextTimes = it?.toString()?.toIntOrNull() ?: 4
         }
     }
 
@@ -126,6 +133,8 @@ class CreateQwenDialog: BaseDialog<DialogCreateQwenBinding>() {
         chatInfoId = chatInfoId,
         apiKey = "",
         model = mModel,
-        temperature = mTemperature
+        temperature = mTemperature,
+        enableSearch = mEnableSearch,
+        contextTimes = mContextTimes
     )
 }

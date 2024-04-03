@@ -16,5 +16,9 @@ data class SettingQwen(
     @ColumnInfo("model")
     val model: String,
     @ColumnInfo("temperature")
-    val temperature: Float
+    val temperature: Float,
+    @ColumnInfo("enable_search")
+    val enableSearch: Boolean,
+    @ColumnInfo("context_times")
+    val contextTimes: Int
 )

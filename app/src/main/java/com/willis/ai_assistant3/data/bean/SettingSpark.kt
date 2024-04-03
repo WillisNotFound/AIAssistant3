@@ -19,4 +19,6 @@ data class SettingSpark (
     val apiSecret: String,
     @ColumnInfo("temperature")
     val temperature: Float,
+    @ColumnInfo("context_times")
+    val contextTimes: Int
 )

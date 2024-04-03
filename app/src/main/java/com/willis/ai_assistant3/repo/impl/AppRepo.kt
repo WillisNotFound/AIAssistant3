@@ -81,23 +81,6 @@ object AppRepo : IAppRepo {
         insertDefaultSettingErnie(phone, isAdmin)
         insertDefaultSettingQwen(phone, isAdmin)
         insertDefaultSettingSpark(phone, isAdmin)
-/*        val userDetail = UserDetail(
-            phone = phone,
-            ernieClientId = if (isAdmin) DEFAULT_ERNIE_CLIENT_ID else DEFAULT_ERNIE_CLIENT_ID,
-            ernieClientSecret = if (isAdmin) DEFAULT_ERNIE_CLIENT_SECRET else DEFAULT_ERNIE_CLIENT_SECRET,
-            ernieAccessToken = if (isAdmin) DEFAULT_ERNIE_ACCESS_TOKEN else DEFAULT_ERNIE_ACCESS_TOKEN,
-            ernieUrl = if (isAdmin) DEFAULT_ERNIE_URL else DEFAULT_ERNIE_URL,
-            ernieTemperature = DEFAULT_ERNIE_TEMPERATURE,
-            sparkAppId = if (isAdmin) DEFAULT_SPARK_APP_ID else "",
-            sparkApiKey = if (isAdmin) DEFAULT_SPARK_API_KEY else "",
-            sparkApiSecret = if (isAdmin) DEFAULT_SPARK_API_SECRET else "",
-            sparkTemperature = DEFAULT_SPARK_TEMPERATURE,
-            qwenApiKey = if (isAdmin) DEFAULT_QWEN_API_KEY else "",
-            qwenModel = if (isAdmin) DEFAULT_QWEN_MODEL else "",
-            qwenTemperature = DEFAULT_QWEN_TEMPERATURE
-        )
-        mUserInfoDao.insertOrReplace(userInfo)
-        AppDatabase.instance.userDetailDao().insertOrReplace(userDetail)*/
         return userInfo
     }
 
@@ -133,7 +116,8 @@ object AppRepo : IAppRepo {
             clientSecret = DEFAULT_ERNIE_CLIENT_SECRET,
             accessToken = DEFAULT_ERNIE_ACCESS_TOKEN,
             url = DEFAULT_ERNIE_URL,
-            temperature = DEFAULT_ERNIE_TEMPERATURE
+            temperature = DEFAULT_ERNIE_TEMPERATURE,
+            contextTimes = 4
         ).also {
             UserDatabase.getInstance(phone).settingErnieDao().insertOrReplace(it)
         }
@@ -144,7 +128,9 @@ object AppRepo : IAppRepo {
             chatInfoId = -1L,
             apiKey = if (isAdmin) DEFAULT_QWEN_API_KEY else "",
             model = if (isAdmin) DEFAULT_QWEN_MODEL else "",
-            temperature = DEFAULT_QWEN_TEMPERATURE
+            temperature = DEFAULT_QWEN_TEMPERATURE,
+            enableSearch = false,
+            contextTimes = 4
         ).also {
             UserDatabase.getInstance(phone).settingQwenDao().insertOrReplace(it)
         }
@@ -157,6 +143,7 @@ object AppRepo : IAppRepo {
             apiKey = if (isAdmin) DEFAULT_SPARK_API_KEY else "",
             apiSecret = if (isAdmin) DEFAULT_SPARK_API_SECRET else "",
             temperature = DEFAULT_SPARK_TEMPERATURE,
+            contextTimes = 4
         ).also {
             UserDatabase.getInstance(phone).settingSparkDao().insertOrReplace(it)
         }

@@ -21,4 +21,6 @@ interface ISettingErnieRepo {
     suspend fun updateUrl(newUrl: String): BaseResult<Unit>
 
     suspend fun updateTemperature(newTemperature: Float): BaseResult<Unit>
+
+    suspend fun updateContextTimes(newContextTimes: Int): BaseResult<Unit>
 }

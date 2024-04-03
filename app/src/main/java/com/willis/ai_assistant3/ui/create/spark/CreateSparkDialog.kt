@@ -39,10 +39,8 @@ class CreateSparkDialog : BaseDialog<DialogCreateSparkBinding>() {
 
     private val mType = 1
     private var mNickname = ""
-//    private var mAppId = ""
-//    private var mApiKey = ""
-//    private var mApiSecret = ""
     private var mTemperature = 0.8F
+    private var mContextTimes = 4
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return super.onCreateDialog(savedInstanceState).apply {
@@ -76,14 +74,13 @@ class CreateSparkDialog : BaseDialog<DialogCreateSparkBinding>() {
     override fun initView() {
         lifecycleScope.launchWhenResumed {
             mViewModel.getDefaultSetting()?.let {
-//                mAppId = it.appId
-//                mApiKey = it.apiKey
-//                mApiSecret= it.apiSecret
                 mTemperature = it.temperature
+                mContextTimes = it.contextTimes
                 mBinding.createSparkEdtAppId.setText(it.appId)
                 mBinding.createSparkEdtApiKey.setText(it.apiKey)
                 mBinding.createSparkEdtApiSecret.setText(it.apiSecret)
                 mBinding.createSparkEdtTemperature.setText(it.temperature.toString())
+                mBinding.createSparkEdtContextTimes.setText(it.contextTimes.toString())
             }
         }
     }
@@ -104,20 +101,12 @@ class CreateSparkDialog : BaseDialog<DialogCreateSparkBinding>() {
             mNickname = it?.toString() ?: ""
         }
 
-//        mBinding.createSparkEdtAppId.addOnTextChangeListener {
-//            mAppId = it?.toString() ?: ""
-//        }
-//
-//        mBinding.createSparkEdtApiKey.addOnTextChangeListener {
-//            mApiKey = it?.toString() ?: ""
-//        }
-//
-//        mBinding.createSparkEdtApiSecret.addOnTextChangeListener {
-//            mApiSecret = it?.toString() ?: ""
-//        }
-
         mBinding.createSparkEdtTemperature.addOnTextChangeListener {
             mTemperature = it?.toString()?.toFloatOrNull() ?: 0.8F
+        }
+
+        mBinding.createSparkEdtContextTimes.addOnTextChangeListener {
+            mContextTimes = it?.toString()?.toIntOrNull() ?: 4
         }
     }
 
@@ -134,6 +123,7 @@ class CreateSparkDialog : BaseDialog<DialogCreateSparkBinding>() {
         appId = "",
         apiKey = "",
         apiSecret = "",
-        temperature = mTemperature
+        temperature = mTemperature,
+        contextTimes = mContextTimes
     )
 }

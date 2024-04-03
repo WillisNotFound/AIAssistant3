@@ -19,4 +19,6 @@ interface ISettingSparkRepo {
     suspend fun updateApiSecret(newApiSecret: String): BaseResult<Unit>
 
     suspend fun updateTemperature(newTemperature: Float): BaseResult<Unit>
+
+    suspend fun updateContextTimes(newContextTimes: Int): BaseResult<Unit>
 }

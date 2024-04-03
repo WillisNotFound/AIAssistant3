@@ -45,6 +45,10 @@ class SettingSparkRepo(chatInfoId: Long) : ISettingSparkRepo {
         return realUpdate(mState.value?.copy(temperature = newTemperature))
     }
 
+    override suspend fun updateContextTimes(newContextTimes: Int): BaseResult<Unit> {
+        return realUpdate(mState.value?.copy(contextTimes = newContextTimes))
+    }
+
     private suspend fun realUpdate(newState: SettingSpark?): BaseResult<Unit> {
         newState?.let {
             mState.value = newState

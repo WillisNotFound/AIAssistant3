@@ -64,6 +64,10 @@ class SettingErnieRepo(private val chatInfoId: Long) : ISettingErnieRepo {
         return realUpdate(mState.value?.copy(temperature = newTemperature))
     }
 
+    override suspend fun updateContextTimes(newContextTimes: Int): BaseResult<Unit> {
+        return realUpdate(mState.value?.copy(contextTimes = newContextTimes))
+    }
+
     private suspend fun updateAccessToken(newAccessToken: String): BaseResult<Unit> {
         return realUpdate(mState.value?.copy(accessToken = newAccessToken))
     }

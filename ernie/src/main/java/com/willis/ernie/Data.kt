@@ -7,7 +7,14 @@ import com.google.gson.annotations.SerializedName
  * @author willis.yan.ws@gmail.com
  * @date: 2023/12/28
  */
-class ChatResponseBody(
+internal class RequestBody(
+    @SerializedName("messages")
+    val messages: List<ErnieMessage>,
+    @SerializedName("temperature")
+    val temperature: Float
+)
+
+class ResponseBody(
     @SerializedName("id")
     val id: String,
     @SerializedName("object")
@@ -18,4 +25,12 @@ class ChatResponseBody(
     val result: String,
     @SerializedName("need_clear_history")
     val needClearHistory: Boolean
+)
+
+
+class ErnieMessage(
+    @SerializedName("role")
+    val role: String,// 用户 - user, 机器人 - assistant
+    @SerializedName("content")
+    val content: String
 )

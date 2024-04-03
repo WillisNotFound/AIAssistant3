@@ -42,7 +42,8 @@ class CreateErnieDialog : BaseDialog<DialogCreateErnieBinding>() {
     private var mUrl = ""
 //    private var mClientId = ""
 //    private var mClientSecret = ""
-    private var mTemperature = 0.8F
+private var mTemperature = 0.8F
+    private var mContextTimes = 4
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return super.onCreateDialog(savedInstanceState).apply {
@@ -78,13 +79,11 @@ class CreateErnieDialog : BaseDialog<DialogCreateErnieBinding>() {
         lifecycleScope.launchWhenResumed {
             mViewModel.getDefaultSetting()?.let {
                 mUrl = it.url
-//                mClientId = it.clientId
-//                mClientSecret = it.clientSecret
                 mTemperature = it.temperature
+                mContextTimes = it.contextTimes
                 mBinding.createErnieEdtUrl.setText(it.url)
-//                mBinding.createErnieEdtClientId.setText(it.clientId)
-//                mBinding.createErnieEdtClientSecret.setText(it.clientSecret)
                 mBinding.createErnieEdtTemperature.setText(it.temperature.toString())
+                mBinding.createErnieEdtContextTimes.setText(it.contextTimes.toString())
             }
         }
     }
@@ -109,16 +108,12 @@ class CreateErnieDialog : BaseDialog<DialogCreateErnieBinding>() {
             mUrl = it?.toString() ?: ""
         }
 
-//        mBinding.createErnieEdtClientId.addOnTextChangeListener {
-//            mClientId = it?.toString() ?: ""
-//        }
-//
-//        mBinding.createErnieEdtClientSecret.addOnTextChangeListener {
-//            mClientSecret = it?.toString() ?: ""
-//        }
-
         mBinding.createErnieEdtTemperature.addOnTextChangeListener {
             mTemperature = it?.toString()?.toFloatOrNull() ?: 0.8F
+        }
+
+        mBinding.createErnieEdtContextTimes.addOnTextChangeListener {
+            mContextTimes = it?.toString()?.toIntOrNull() ?: 4
         }
     }
 
@@ -136,6 +131,7 @@ class CreateErnieDialog : BaseDialog<DialogCreateErnieBinding>() {
         clientId = "",
         clientSecret = "",
         accessToken = "",
-        temperature = mTemperature
+        temperature = mTemperature,
+        contextTimes = mContextTimes
     )
 }

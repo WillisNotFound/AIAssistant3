@@ -45,9 +45,9 @@ object Spark {
     /**
      * 同步调用
      */
-    suspend fun syncSend(sparkQuestions: List<SparkQuestion>): BaseResult<String> {
+    suspend fun syncSend(sparkMessages: List<SparkMessage>): BaseResult<String> {
         llm?.let {
-            val syncOutput = it.run(GsonUtils.toJson(sparkQuestions.check()))
+            val syncOutput = it.run(GsonUtils.toJson(sparkMessages.check()))
             if (syncOutput.errCode == 0) {
                 Log.d(
                     TAG, "content = ${syncOutput.content}, " +
@@ -72,8 +72,8 @@ object Spark {
         llm = LLM(llmConfig)
     }
 
-    private fun List<SparkQuestion>.check(): List<SparkQuestion> {
-        val newList = mutableListOf<SparkQuestion>()
+    private fun List<SparkMessage>.check(): List<SparkMessage> {
+        val newList = mutableListOf<SparkMessage>()
         // 确保一问一答格式，并且最新的问题必须存在
         for (i in this.size - 1 downTo 0) {
             val sparkQuestion = this[i]

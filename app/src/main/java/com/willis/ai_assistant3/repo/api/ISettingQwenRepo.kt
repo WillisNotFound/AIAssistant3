@@ -17,4 +17,8 @@ interface ISettingQwenRepo {
     suspend fun updateModel(newModel: String): BaseResult<Unit>
 
     suspend fun updateTemperature(newTemperature: Float): BaseResult<Unit>
+
+    suspend fun updateEnableSearch(newEnableSearch: Boolean): BaseResult<Unit>
+
+    suspend fun updateContextTimes(newContextTimes: Int): BaseResult<Unit>
 }

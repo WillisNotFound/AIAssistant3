@@ -38,6 +38,12 @@ interface ChatMessageDao {
     suspend fun queryByChatInfoId(chatInfoId: Long, startIndex: Int, size: Int): List<ChatMessage>
 
     /**
+     * 从下往上查询，返回的列表为倒序
+     */
+    @Query("SELECT * FROM chat_message WHERE chat_info_id = :chatInfoId ORDER BY id DESC")
+    suspend fun queryByChatInfoIdDesc(chatInfoId: Long): List<ChatMessage>
+
+    /**
      * 从上往下查询，返回的列表为正序
      */
     @Query("SELECT * FROM chat_message WHERE chat_info_id = :chatInfoId ORDER BY id")

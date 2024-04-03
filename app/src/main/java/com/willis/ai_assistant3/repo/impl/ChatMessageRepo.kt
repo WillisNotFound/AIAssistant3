@@ -11,6 +11,12 @@ import com.willis.base.services.toastService
 import com.willis.base.utils.AppUtils
 import com.willis.base.utils.DateUtils
 import com.willis.base.utils.NetworkUtils
+import com.willis.ernie.Ernie
+import com.willis.ernie.ErnieMessage
+import com.willis.qwen.Qwen
+import com.willis.qwen.QwenMessage
+import com.willis.spark.Spark
+import com.willis.spark.SparkMessage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,7 +28,7 @@ import kotlinx.coroutines.launch
  * @author willis.yan.ws@gmail.com
  * @date: 2023/12/22
  */
-class ChatMessageRepo(private val chatInfoId: Long) : IChatMessageRepo {
+class ChatMessageRepo(val chatInfoId: Long) : IChatMessageRepo {
     private val mPhone = appRepo.currentPhoneFlow.value!!
     private lateinit var mChatInfo: ChatInfo
 
@@ -51,12 +57,13 @@ class ChatMessageRepo(private val chatInfoId: Long) : IChatMessageRepo {
             return
         }
         mLoadingFlow.value = true
-        insertAndUpdateNewChatMessage(content, true)
-        val historyChatMessages = mChatMessageDao.queryByChatInfoId(mChatInfo.id, 0, 20).reversed()
+        val histories = getCorrectHistories(4).toMutableList()
+        val newChatMessage = insertAndUpdateNewChatMessage(content, true)
+        histories.add(newChatMessage)
         when (mChatInfo.type) {
-            0 -> ernieSend(historyChatMessages)
-            1 -> sparkSend(historyChatMessages)
-            2 -> qwenSend(historyChatMessages)
+            0 -> ernieSend(histories)
+            1 -> sparkSend(histories)
+            2 -> qwenSend(histories)
         }
         mLoadingFlow.value = false
     }
@@ -68,48 +75,80 @@ class ChatMessageRepo(private val chatInfoId: Long) : IChatMessageRepo {
         return list
     }
 
-    private suspend fun ernieSend(historyChatMessages: List<ChatMessage>) {
-//        val ernieQuestion = historyChatMessages.map {
-//            ErnieQuestion(if (it.request) "user" else "assistant", it.content)
-//        }
-//        handleChatResult(
-//            Ernie.syncSend(
-//                mUserDetail.ernieAccessToken,
-//                mUserDetail.ernieUrl,
-//                mUserDetail.ernieTemperature,
-//                ernieQuestion
-//            )
-//        )
+    private suspend fun ernieSend(histories: List<ChatMessage>) {
+        val ernieMessages = histories.map {
+            ErnieMessage(if (it.request) "user" else "assistant", it.content)
+        }
+        val settingDao = UserDatabase.getInstance(mPhone).settingErnieDao()
+        val globalSetting = settingDao.queryByChatInfoId(-1)!!
+        val chatSetting = settingDao.queryByChatInfoId(mChatInfo.id)!!
+        val result = Ernie.sendMessage(
+            globalSetting.accessToken,
+            chatSetting.url,
+            chatSetting.temperature,
+            ernieMessages
+        )
+        handleChatResult(result)
     }
 
-    private suspend fun sparkSend(historyChatMessages: List<ChatMessage>) {
-//        val sparkQuestions = historyChatMessages.map {
-//            SparkQuestion(if (it.request) "user" else "assistant", it.content)
-//        }
-//        handleChatResult(Spark.syncSend(sparkQuestions))
+    private suspend fun sparkSend(histories: List<ChatMessage>) {
+        val sparkMessages = histories.map {
+            SparkMessage(if (it.request) "user" else "assistant", it.content)
+        }
+        val settingDao = UserDatabase.getInstance(mPhone).settingSparkDao()
+        val globalSetting = settingDao.queryByChatInfoId(-1)!!
+        val chatSetting = settingDao.queryByChatInfoId(mChatInfo.id)!!
+        val result = Spark.syncSend(sparkMessages)
+        handleChatResult(result)
     }
 
-    private suspend fun qwenSend(historyChatMessages: List<ChatMessage>) {
-//        val qwenQuestions = historyChatMessages.map {
-//            QwenQuestion(if (it.request) "user" else "assistant", it.content)
-//        }
-//        val temperature = mUserDetail.qwenTemperature
-//        handleChatResult(Qwen.syncSend(mUserDetail.qwenApiKey, mUserDetail.qwenModel, temperature, qwenQuestions))
+    private suspend fun qwenSend(histories: List<ChatMessage>) {
+        val qwenMessages = histories.map {
+            QwenMessage(if (it.request) "user" else "assistant", it.content)
+        }
+        val settingDao = UserDatabase.getInstance(mPhone).settingQwenDao()
+        val globalSetting = settingDao.queryByChatInfoId(-1)!!
+        val chatSetting = settingDao.queryByChatInfoId(mChatInfo.id)!!
+        val result = Qwen.sendMessage(
+            globalSetting.apiKey,
+            chatSetting.model,
+            chatSetting.temperature,
+            chatSetting.enableSearch,
+            qwenMessages
+        )
+        handleChatResult(result)
     }
 
-    private suspend fun insertAndUpdateNewChatMessage(content: String, request: Boolean) {
+    private suspend fun insertAndUpdateNewChatMessage(
+        content: String,
+        request: Boolean
+    ): ChatMessage {
         val chatMessage = ChatMessage(
-            0,
-            mChatInfo.id,
-            content,
-            request,
-            DateUtils.currentMillis()
+            chatInfoId = mChatInfo.id,
+            content = content,
+            request = request,
+            createMillis = DateUtils.currentMillis()
         )
         chatMessage.id = mChatMessageDao.insert(chatMessage)
         mNewChatMessageFlow.value = chatMessage
         mChatInfo.lastChatMillis = chatMessage.createMillis
         mChatInfo.lastChatMessage = chatMessage.content
         mChatInfoDao.update(mChatInfo)
+        return chatMessage
+    }
+
+    private suspend fun getCorrectHistories(times: Int): List<ChatMessage> {
+        return mChatMessageDao.queryByChatInfoIdDesc(mChatInfo.id).run {
+            val list = mutableListOf<ChatMessage>()
+            forEach { chatMessage ->
+                if (list.size and 1 == 0) {
+                    if (!chatMessage.request) list.add(chatMessage)
+                } else {
+                    if (chatMessage.request) list.add(chatMessage)
+                }
+            }
+            list.takeLast(times * 2).reversed()
+        }
     }
 
     private suspend fun handleChatResult(result: BaseResult<String>) {

@@ -34,4 +34,19 @@ class BotQwenSettingViewModel(chatInfoId: Long) : ViewModel() {
         }
         mRepo.updateTemperature(newTemperature)
     }
+
+    suspend fun updateEnableSearch(newEnableSearch: Boolean) = withContext(Dispatchers.Default) {
+        mRepo.updateEnableSearch(newEnableSearch)
+    }
+
+    suspend fun updateContextTimes(newContextTimesText: String) = withContext(Dispatchers.Default) {
+        val default = 4
+        val newContextTimes = try {
+            val temp = newContextTimesText.toInt()
+            if (temp < 0) default else temp
+        } catch (e: NumberFormatException) {
+            default
+        }
+        mRepo.updateContextTimes(newContextTimes)
+    }
 }

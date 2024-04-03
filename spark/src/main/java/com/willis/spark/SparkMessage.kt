@@ -1,13 +1,13 @@
-package com.willis.qwen
+package com.willis.spark
 
 import com.google.gson.annotations.SerializedName
 
 /**
  * description: none
  * @author willis.yan.ws@gmail.com
- * @date: 2023/12/28
+ * @date: 2023/12/27
  */
-class QwenQuestion(
+class SparkMessage(
     @SerializedName("role")
     val role: String,// 用户 - user, 机器人 - assistant
     @SerializedName("content")

@@ -20,5 +20,7 @@ data class SettingErnie (
     @ColumnInfo("url")
     val url: String,
     @ColumnInfo("temperature")
-    val temperature: Float
+    val temperature: Float,
+    @ColumnInfo("context_times")
+    val contextTimes: Int
 )

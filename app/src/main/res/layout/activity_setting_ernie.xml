@@ -107,9 +107,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:background_tint="@color/white"
-                    app:background_type="bottom"
+                    app:background_type="center"
                     app:end_imv_src="@drawable/ic_edit_24dp"
                     app:router_item_title="TEMPERATURE"
+                    app:show_end_imv="true"
+                    app:show_start_imv="false"
+                    app:show_title_end_imv="false" />
+
+                <com.willis.ai_assistant3.widget.RouterItem
+                    android:id="@+id/setting_ernie_router_context_times"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:background_tint="@color/white"
+                    app:background_type="bottom"
+                    app:end_imv_src="@drawable/ic_edit_24dp"
+                    app:router_item_title="CONTEXT TIMES"
                     app:show_end_imv="true"
                     app:show_start_imv="false"
                     app:show_title_end_imv="false" />

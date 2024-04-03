@@ -82,6 +82,12 @@ class BotSparkSettingActivity : BaseActivity<ActivitySettingSparkBinding>() {
                 setSubtitle(it?.temperature.toString())
             }
         }
+
+        mBinding.settingSparkRouterContextTimes.apply {
+            mViewModel.state.collectWhenResumed(lifecycleScope) {
+                setSubtitle(it?.contextTimes.toString())
+            }
+        }
     }
 
     override fun initListener() {
@@ -133,6 +139,18 @@ class BotSparkSettingActivity : BaseActivity<ActivitySettingSparkBinding>() {
                     val editResult = dialogService.showEditDialog(supportFragmentManager, builder)
                     if (editResult is BaseResult.Success) {
                         simpleHandleResult(mViewModel.updateTemperature(editResult.value))
+                    }
+                }
+            }
+        }
+
+        mBinding.settingSparkRouterContextTimes.setOnClickListener {
+            lifecycleScope.launchWhenResumed {
+                mViewModel.state.value?.contextTimes?.let {
+                    val builder = EditDialogBuilder("修改", it.toString())
+                    val editResult = dialogService.showEditDialog(supportFragmentManager, builder)
+                    if (editResult is BaseResult.Success) {
+                        simpleHandleResult(mViewModel.updateContextTimes(editResult.value))
                     }
                 }
             }

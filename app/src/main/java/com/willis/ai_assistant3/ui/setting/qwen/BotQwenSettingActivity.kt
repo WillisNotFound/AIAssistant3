@@ -77,6 +77,18 @@ class BotQwenSettingActivity : BaseActivity<ActivitySettingQwenBinding>() {
                 setSubtitle(it?.temperature.toString())
             }
         }
+
+        mBinding.settingQwenSwitchEnableSearch.apply {
+            mViewModel.state.collectWhenResumed(lifecycleScope) {
+                isChecked = it?.enableSearch ?: false
+            }
+        }
+
+        mBinding.settingQwenRouterContextTimes.apply {
+            mViewModel.state.collectWhenResumed(lifecycleScope) {
+                setSubtitle(it?.contextTimes.toString())
+            }
+        }
     }
 
     override fun initListener() {
@@ -115,6 +127,24 @@ class BotQwenSettingActivity : BaseActivity<ActivitySettingQwenBinding>() {
                     val editResult = dialogService.showEditDialog(supportFragmentManager, builder)
                     if (editResult is BaseResult.Success) {
                         simpleHandleResult(mViewModel.updateTemperature(editResult.value))
+                    }
+                }
+            }
+        }
+
+        mBinding.settingQwenSwitchEnableSearch.setOnCheckedChangeListener { _, isChecked ->
+            lifecycleScope.launchWhenResumed {
+                mViewModel.updateEnableSearch(isChecked)
+            }
+        }
+
+        mBinding.settingQwenRouterContextTimes.setOnClickListener {
+            lifecycleScope.launchWhenResumed {
+                mViewModel.state.value?.contextTimes?.let {
+                    val builder = EditDialogBuilder("修改", it.toString())
+                    val editResult = dialogService.showEditDialog(supportFragmentManager, builder)
+                    if (editResult is BaseResult.Success) {
+                        simpleHandleResult(mViewModel.updateContextTimes(editResult.value))
                     }
                 }
             }

@@ -42,6 +42,14 @@ class SettingQwenRepo(chatInfoId: Long) : ISettingQwenRepo {
         return realUpdate(mState.value?.copy(temperature = newTemperature))
     }
 
+    override suspend fun updateEnableSearch(newEnableSearch: Boolean): BaseResult<Unit> {
+        return realUpdate(mState.value?.copy(enableSearch = newEnableSearch))
+    }
+
+    override suspend fun updateContextTimes(newContextTimes: Int): BaseResult<Unit> {
+        return realUpdate(mState.value?.copy(contextTimes = newContextTimes))
+    }
+
     private suspend fun realUpdate(newState: SettingQwen?): BaseResult<Unit> {
         newState?.let {
             mState.value = newState
