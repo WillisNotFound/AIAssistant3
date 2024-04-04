@@ -34,6 +34,14 @@ class BotERNIESettingActivity : BaseActivity<ActivitySettingErnieBinding>() {
         const val ENTER_FROM_CHAT = "chat"
         const val ENTER_FROM_MINE = "mine"
 
+        private const val INFORMATION_CLIENT_ID = "应用的API Key，在智能云千帆控制台-应用列表查看"
+        private const val INFORMATION_CLIENT_SECRET = "应用的Secret Key，在智能云千帆控制台-应用列表查看"
+        private const val INFORMATION_ACCESS_TOKEN = "应用的访问凭证，由CLIENT ID与CLIENT SECRET共同决定，默认有效期30天，需要注意及时刷新"
+        private const val INFORMATION_URL = "模型的URL，不同模型对应不同的URL"
+        private const val INFORMATION_TEMPERATURE = "较高的数值会使输出更加随机，而较低的数值会使其更加集中和确定\n范围: (0, 1.0]，不能为0"
+        private const val INFORMATION_CONTEXT_TIMES = "每次对话最多带上的上下文对话数\n注意：上下文越多，响应越慢"
+
+
         fun startAction(context: Context, chatInfoId: Long, enterFrom: String) {
             val intent = Intent(context, BotERNIESettingActivity::class.java)
             intent.putExtra(EXTRA_CHAT_INFO_ID, chatInfoId)
@@ -116,6 +124,15 @@ class BotERNIESettingActivity : BaseActivity<ActivitySettingErnieBinding>() {
             }
         }
 
+        mBinding.settingErnieRouterClientId.setOnTitleEndImvClick {
+            lifecycleScope.launchWhenResumed {
+                dialogService.showConfirmDialog(
+                    supportFragmentManager,
+                    buildConfirmDialog("CLIENT ID", INFORMATION_CLIENT_ID)
+                )
+            }
+        }
+
         mBinding.settingErnieRouterClientSecret.setOnClickListener {
             lifecycleScope.launchWhenResumed {
                 mViewModel.state.value?.clientSecret?.let {
@@ -128,12 +145,30 @@ class BotERNIESettingActivity : BaseActivity<ActivitySettingErnieBinding>() {
             }
         }
 
+        mBinding.settingErnieRouterClientSecret.setOnTitleEndImvClick {
+            lifecycleScope.launchWhenResumed {
+                dialogService.showConfirmDialog(
+                    supportFragmentManager,
+                    buildConfirmDialog("CLIENT SECRET", INFORMATION_CLIENT_SECRET)
+                )
+            }
+        }
+
         mBinding.settingErnieRouterAccessToken.setOnClickListener {
             lifecycleScope.launchWhenResumed {
                 val builder = ConfirmDialogBuilder("提示", "是否刷新 Access Token")
                 if (dialogService.showConfirmDialog(supportFragmentManager, builder) == true) {
                     simpleHandleResult(mViewModel.refreshAccessToken())
                 }
+            }
+        }
+
+        mBinding.settingErnieRouterAccessToken.setOnTitleEndImvClick {
+            lifecycleScope.launchWhenResumed {
+                dialogService.showConfirmDialog(
+                    supportFragmentManager,
+                    buildConfirmDialog("ACCESS TOKEN", INFORMATION_ACCESS_TOKEN)
+                )
             }
         }
 
@@ -149,6 +184,15 @@ class BotERNIESettingActivity : BaseActivity<ActivitySettingErnieBinding>() {
             }
         }
 
+        mBinding.settingErnieRouterUrl.setOnTitleEndImvClick {
+            lifecycleScope.launchWhenResumed {
+                dialogService.showConfirmDialog(
+                    supportFragmentManager,
+                    buildConfirmDialog("URL", INFORMATION_URL)
+                )
+            }
+        }
+
         mBinding.settingErnieRouterTemperature.setOnClickListener {
             lifecycleScope.launchWhenResumed {
                 mViewModel.state.value?.temperature?.let {
@@ -158,6 +202,15 @@ class BotERNIESettingActivity : BaseActivity<ActivitySettingErnieBinding>() {
                         simpleHandleResult(mViewModel.updateTemperature(editResult.value))
                     }
                 }
+            }
+        }
+
+        mBinding.settingErnieRouterTemperature.setOnTitleEndImvClick {
+            lifecycleScope.launchWhenResumed {
+                dialogService.showConfirmDialog(
+                    supportFragmentManager,
+                    buildConfirmDialog("TEMPERATURE", INFORMATION_TEMPERATURE)
+                )
             }
         }
 
@@ -172,6 +225,15 @@ class BotERNIESettingActivity : BaseActivity<ActivitySettingErnieBinding>() {
                 }
             }
         }
+
+        mBinding.settingErnieRouterContextTimes.setOnTitleEndImvClick {
+            lifecycleScope.launchWhenResumed {
+                dialogService.showConfirmDialog(
+                    supportFragmentManager,
+                    buildConfirmDialog("CONTEXT TIMES", INFORMATION_CONTEXT_TIMES)
+                )
+            }
+        }
     }
 
     private fun simpleHandleResult(result: BaseResult<Unit>) {
@@ -179,5 +241,13 @@ class BotERNIESettingActivity : BaseActivity<ActivitySettingErnieBinding>() {
             is BaseResult.Failure -> toastService.showError(result.desc)
             is BaseResult.Success -> toastService.showRight(result.desc)
         }
+    }
+
+    private fun buildConfirmDialog(title: String, information: String): ConfirmDialogBuilder {
+        return ConfirmDialogBuilder(
+            title = title,
+            content = information,
+            showCancelButton = false
+        )
     }
 }

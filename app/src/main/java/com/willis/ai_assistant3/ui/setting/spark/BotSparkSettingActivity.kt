@@ -11,8 +11,10 @@ import com.willis.ai_assistant3.base.BaseActivity
 import com.willis.ai_assistant3.databinding.ActivitySettingSparkBinding
 import com.willis.ai_assistant3.ui.setting.ernie.BotERNIESettingActivity
 import com.willis.ai_assistant3.ui.setting.ernie.BotERNIESettingViewModel
+import com.willis.ai_assistant3.ui.setting.qwen.BotQwenSettingActivity
 import com.willis.ai_assistant3.widget.RouterItem
 import com.willis.base.data.BaseResult
+import com.willis.base.dialog.ConfirmDialogBuilder
 import com.willis.base.dialog.EditDialogBuilder
 import com.willis.base.ext.collectWhenResumed
 import com.willis.base.ext.gone
@@ -31,6 +33,12 @@ class BotSparkSettingActivity : BaseActivity<ActivitySettingSparkBinding>() {
 
         const val ENTER_FROM_CHAT = "chat"
         const val ENTER_FROM_MINE = "mine"
+
+        private const val INFORMATION_APP_ID = "讯飞开放平台创建应用后，生成的应用ID"
+        private const val INFORMATION_API_KEY = "讯飞开放平台创建应用后，生成的唯一应用标识"
+        private const val INFORMATION_API_SECRET = "讯飞开放平台创建应用后，生成的唯一应用秘钥"
+        private const val INFORMATION_TEMPERATURE = "配置核采样阈值，改变结果的随机程度\n范围: (0，1] ，默认：0.5"
+        private const val INFORMATION_CONTEXT_TIMES = "每次对话最多带上的上下文对话数\n注意：上下文越多，响应越慢"
 
         fun startAction(context: Context, chatInfoId: Long, enterFrom: String) {
             val intent = Intent(context, BotSparkSettingActivity::class.java)
@@ -107,6 +115,15 @@ class BotSparkSettingActivity : BaseActivity<ActivitySettingSparkBinding>() {
             }
         }
 
+        mBinding.settingSparkRouterAppId.setOnTitleEndImvClick {
+            lifecycleScope.launchWhenResumed {
+                dialogService.showConfirmDialog(
+                    supportFragmentManager,
+                    buildConfirmDialog("APP ID", INFORMATION_APP_ID)
+                )
+            }
+        }
+
         mBinding.settingSparkRouterApiKey.setOnClickListener {
             lifecycleScope.launchWhenResumed {
                 mViewModel.state.value?.apiKey?.let {
@@ -119,6 +136,15 @@ class BotSparkSettingActivity : BaseActivity<ActivitySettingSparkBinding>() {
             }
         }
 
+        mBinding.settingSparkRouterApiKey.setOnTitleEndImvClick {
+            lifecycleScope.launchWhenResumed {
+                dialogService.showConfirmDialog(
+                    supportFragmentManager,
+                    buildConfirmDialog("API KEY", INFORMATION_API_KEY)
+                )
+            }
+        }
+
         mBinding.settingSparkRouterApiSecret.setOnClickListener {
             lifecycleScope.launchWhenResumed {
                 mViewModel.state.value?.apiSecret?.let {
@@ -128,6 +154,15 @@ class BotSparkSettingActivity : BaseActivity<ActivitySettingSparkBinding>() {
                         simpleHandleResult(mViewModel.updateApiSecret(editResult.value))
                     }
                 }
+            }
+        }
+
+        mBinding.settingSparkRouterApiSecret.setOnTitleEndImvClick {
+            lifecycleScope.launchWhenResumed {
+                dialogService.showConfirmDialog(
+                    supportFragmentManager,
+                    buildConfirmDialog("API SECRET", INFORMATION_API_SECRET)
+                )
             }
         }
 
@@ -144,6 +179,15 @@ class BotSparkSettingActivity : BaseActivity<ActivitySettingSparkBinding>() {
             }
         }
 
+        mBinding.settingSparkRouterTemperature.setOnTitleEndImvClick {
+            lifecycleScope.launchWhenResumed {
+                dialogService.showConfirmDialog(
+                    supportFragmentManager,
+                    buildConfirmDialog("TEMPERATURE", INFORMATION_TEMPERATURE)
+                )
+            }
+        }
+
         mBinding.settingSparkRouterContextTimes.setOnClickListener {
             lifecycleScope.launchWhenResumed {
                 mViewModel.state.value?.contextTimes?.let {
@@ -155,6 +199,15 @@ class BotSparkSettingActivity : BaseActivity<ActivitySettingSparkBinding>() {
                 }
             }
         }
+
+        mBinding.settingSparkRouterContextTimes.setOnTitleEndImvClick {
+            lifecycleScope.launchWhenResumed {
+                dialogService.showConfirmDialog(
+                    supportFragmentManager,
+                    buildConfirmDialog("CONTEXT TIMES", INFORMATION_CONTEXT_TIMES)
+                )
+            }
+        }
     }
 
     private fun simpleHandleResult(result: BaseResult<Unit>) {
@@ -162,5 +215,13 @@ class BotSparkSettingActivity : BaseActivity<ActivitySettingSparkBinding>() {
             is BaseResult.Failure -> toastService.showError(result.desc)
             is BaseResult.Success -> toastService.showRight(result.desc)
         }
+    }
+
+    private fun buildConfirmDialog(title: String, information: String): ConfirmDialogBuilder {
+        return ConfirmDialogBuilder(
+            title = title,
+            content = information,
+            showCancelButton = false
+        )
     }
 }

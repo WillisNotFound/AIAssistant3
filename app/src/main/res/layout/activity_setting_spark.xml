@@ -47,7 +47,8 @@
                     app:end_imv_src="@drawable/ic_edit_24dp"
                     app:show_end_imv="true"
                     app:show_start_imv="false"
-                    app:show_title_end_imv="false"
+                    app:show_title_end_imv="true"
+                    app:title_end_imv_src="@drawable/ic_help_24dp"
                     app:router_item_title="APP ID" />
 
                 <com.willis.ai_assistant3.widget.RouterItem
@@ -59,7 +60,8 @@
                     app:end_imv_src="@drawable/ic_edit_24dp"
                     app:show_end_imv="true"
                     app:show_start_imv="false"
-                    app:show_title_end_imv="false"
+                    app:show_title_end_imv="true"
+                    app:title_end_imv_src="@drawable/ic_help_24dp"
                     app:router_item_title="API KEY" />
 
 
@@ -72,7 +74,8 @@
                     app:end_imv_src="@drawable/ic_edit_24dp"
                     app:show_end_imv="true"
                     app:show_start_imv="false"
-                    app:show_title_end_imv="false"
+                    app:show_title_end_imv="true"
+                    app:title_end_imv_src="@drawable/ic_help_24dp"
                     app:router_item_title="API SECRET" />
 
             </LinearLayout>
@@ -99,7 +102,8 @@
                     app:end_imv_src="@drawable/ic_edit_24dp"
                     app:show_end_imv="true"
                     app:show_start_imv="false"
-                    app:show_title_end_imv="false"
+                    app:show_title_end_imv="true"
+                    app:title_end_imv_src="@drawable/ic_help_24dp"
                     app:router_item_title="TEMPERATURE" />
 
                 <com.willis.ai_assistant3.widget.RouterItem
@@ -112,7 +116,8 @@
                     app:router_item_title="CONTEXT TIMES"
                     app:show_end_imv="true"
                     app:show_start_imv="false"
-                    app:show_title_end_imv="false" />
+                    app:show_title_end_imv="true"
+                    app:title_end_imv_src="@drawable/ic_help_24dp" />
 
             </LinearLayout>
 

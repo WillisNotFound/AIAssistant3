@@ -48,7 +48,8 @@
                     app:router_item_title="CLIENT ID"
                     app:show_end_imv="true"
                     app:show_start_imv="false"
-                    app:show_title_end_imv="false" />
+                    app:show_title_end_imv="true"
+                    app:title_end_imv_src="@drawable/ic_help_24dp" />
 
                 <com.willis.ai_assistant3.widget.RouterItem
                     android:id="@+id/setting_ernie_router_client_secret"
@@ -60,7 +61,8 @@
                     app:router_item_title="CLIENT SECRET"
                     app:show_end_imv="true"
                     app:show_start_imv="false"
-                    app:show_title_end_imv="false" />
+                    app:show_title_end_imv="true"
+                    app:title_end_imv_src="@drawable/ic_help_24dp" />
 
 
                 <com.willis.ai_assistant3.widget.RouterItem
@@ -73,7 +75,8 @@
                     app:router_item_title="ACCESS TOKEN"
                     app:show_end_imv="true"
                     app:show_start_imv="false"
-                    app:show_title_end_imv="false" />
+                    app:show_title_end_imv="true"
+                    app:title_end_imv_src="@drawable/ic_help_24dp" />
 
             </LinearLayout>
 
@@ -100,7 +103,8 @@
                     app:router_item_title="URL"
                     app:show_end_imv="true"
                     app:show_start_imv="false"
-                    app:show_title_end_imv="false" />
+                    app:show_title_end_imv="true"
+                    app:title_end_imv_src="@drawable/ic_help_24dp" />
 
                 <com.willis.ai_assistant3.widget.RouterItem
                     android:id="@+id/setting_ernie_router_temperature"
@@ -112,7 +116,8 @@
                     app:router_item_title="TEMPERATURE"
                     app:show_end_imv="true"
                     app:show_start_imv="false"
-                    app:show_title_end_imv="false" />
+                    app:show_title_end_imv="true"
+                    app:title_end_imv_src="@drawable/ic_help_24dp" />
 
                 <com.willis.ai_assistant3.widget.RouterItem
                     android:id="@+id/setting_ernie_router_context_times"
@@ -124,7 +129,8 @@
                     app:router_item_title="CONTEXT TIMES"
                     app:show_end_imv="true"
                     app:show_start_imv="false"
-                    app:show_title_end_imv="false" />
+                    app:show_title_end_imv="true"
+                    app:title_end_imv_src="@drawable/ic_help_24dp" />
 
             </LinearLayout>
 
