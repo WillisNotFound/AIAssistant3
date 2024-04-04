@@ -51,7 +51,7 @@ object AppRepo : IAppRepo {
 
     override suspend fun login(phone: String) = realLogin(phone, false)
 
-    override suspend fun adminLogin() = realLogin("admin", false)
+    override suspend fun adminLogin() = realLogin("admin", true)
 
     override suspend fun logoff(): BaseResult<Unit> {
         updateLoggedUserPhone(null)

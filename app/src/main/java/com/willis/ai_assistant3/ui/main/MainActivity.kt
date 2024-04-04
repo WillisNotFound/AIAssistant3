@@ -30,7 +30,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         lifecycleScope.launchWhenCreated {
             withContext(Dispatchers.IO) {
                 val phone = appRepo.currentPhoneFlow.value!!
-                UserDatabase.getInstance(phone).settingSparkDao().queryById(-1)?.let {
+                UserDatabase.getInstance(phone).settingSparkDao().queryByChatInfoId(-1)?.let {
                     Spark.initSDK(
                         AppUtils.appContext,
                         it.appId,

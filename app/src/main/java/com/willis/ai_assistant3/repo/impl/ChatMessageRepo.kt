@@ -57,13 +57,11 @@ class ChatMessageRepo(val chatInfoId: Long) : IChatMessageRepo {
             return
         }
         mLoadingFlow.value = true
-        val histories = getCorrectHistories(4).toMutableList()
         val newChatMessage = insertAndUpdateNewChatMessage(content, true)
-        histories.add(newChatMessage)
         when (mChatInfo.type) {
-            0 -> ernieSend(histories)
-            1 -> sparkSend(histories)
-            2 -> qwenSend(histories)
+            0 -> ernieSend(newChatMessage)
+            1 -> sparkSend(newChatMessage)
+            2 -> qwenSend(newChatMessage)
         }
         mLoadingFlow.value = false
     }
@@ -75,13 +73,16 @@ class ChatMessageRepo(val chatInfoId: Long) : IChatMessageRepo {
         return list
     }
 
-    private suspend fun ernieSend(histories: List<ChatMessage>) {
-        val ernieMessages = histories.map {
-            ErnieMessage(if (it.request) "user" else "assistant", it.content)
-        }
+    private suspend fun ernieSend(newMessage: ChatMessage) {
         val settingDao = UserDatabase.getInstance(mPhone).settingErnieDao()
         val globalSetting = settingDao.queryByChatInfoId(-1)!!
         val chatSetting = settingDao.queryByChatInfoId(mChatInfo.id)!!
+        val histories = getCorrectHistories(chatSetting.contextTimes).toMutableList().apply {
+            add(newMessage)
+        }
+        val ernieMessages = histories.map {
+            ErnieMessage(if (it.request) "user" else "assistant", it.content)
+        }
         val result = Ernie.sendMessage(
             globalSetting.accessToken,
             chatSetting.url,
@@ -91,24 +92,30 @@ class ChatMessageRepo(val chatInfoId: Long) : IChatMessageRepo {
         handleChatResult(result)
     }
 
-    private suspend fun sparkSend(histories: List<ChatMessage>) {
-        val sparkMessages = histories.map {
-            SparkMessage(if (it.request) "user" else "assistant", it.content)
-        }
+    private suspend fun sparkSend(newMessage: ChatMessage) {
         val settingDao = UserDatabase.getInstance(mPhone).settingSparkDao()
         val globalSetting = settingDao.queryByChatInfoId(-1)!!
         val chatSetting = settingDao.queryByChatInfoId(mChatInfo.id)!!
+        val histories = getCorrectHistories(chatSetting.contextTimes).toMutableList().apply {
+            add(newMessage)
+        }
+        val sparkMessages = histories.map {
+            SparkMessage(if (it.request) "user" else "assistant", it.content)
+        }
         val result = Spark.syncSend(sparkMessages)
         handleChatResult(result)
     }
 
-    private suspend fun qwenSend(histories: List<ChatMessage>) {
-        val qwenMessages = histories.map {
-            QwenMessage(if (it.request) "user" else "assistant", it.content)
-        }
+    private suspend fun qwenSend(newMessage: ChatMessage) {
         val settingDao = UserDatabase.getInstance(mPhone).settingQwenDao()
         val globalSetting = settingDao.queryByChatInfoId(-1)!!
         val chatSetting = settingDao.queryByChatInfoId(mChatInfo.id)!!
+        val histories = getCorrectHistories(chatSetting.contextTimes).toMutableList().apply {
+            add(newMessage)
+        }
+        val qwenMessages = histories.map {
+            QwenMessage(if (it.request) "user" else "assistant", it.content)
+        }
         val result = Qwen.sendMessage(
             globalSetting.apiKey,
             chatSetting.model,
@@ -147,7 +154,7 @@ class ChatMessageRepo(val chatInfoId: Long) : IChatMessageRepo {
                     if (chatMessage.request) list.add(chatMessage)
                 }
             }
-            list.takeLast(times * 2).reversed()
+            list.take(times * 2).reversed()
         }
     }
 

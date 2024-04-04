@@ -36,7 +36,7 @@ class BotQwenSettingActivity : BaseActivity<ActivitySettingQwenBinding>() {
         private const val INFORMATION_API_KEY = "访问模型服务灵积的密钥"
         private const val INFORMATION_MODEL = "指定用于对话的通义千问模型名"
         private const val INFORMATION_ENABLE_SEARCH =
-            "模型内置了互联网搜索服务，该参数控制模型在生成文本时是否参考使用互联网搜索结果"
+            "如果模型内置了互联网搜索服务，该参数控制模型在生成文本时是否参考使用互联网搜索结果"
         private const val INFORMATION_TEMPERATURE =
             "较高的temperature值会降低概率分布的峰值，使得更多的低概率词被选择，生成结果更加多样化；而较低的temperature值则会增强概率分布的峰值，使得高概率词更容易被选择，生成结果更加确定。\n取值范围：[0, 2)，系统默认值0.85。不建议取值为0，无意义。"
         private const val INFORMATION_CONTEXT_TIMES =

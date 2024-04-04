@@ -13,6 +13,7 @@ import com.willis.ai_assistant3.repo.appRepo
 import com.willis.ai_assistant3.ui.main.MainActivity
 import com.willis.base.data.BaseResult
 import com.willis.base.dialog.EditDialogBuilder
+import com.willis.base.ext.visible
 import com.willis.base.services.dialogService
 import com.willis.base.services.toastService
 
@@ -33,7 +34,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     override fun inflateBinding(layoutInflater: LayoutInflater) = ActivityLoginBinding.inflate(layoutInflater)
 
     override fun initView() {
-
+        mBinding.loginTvAdmin.visible()
     }
 
     override fun initListener() {
@@ -48,10 +49,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         }
 
         mBinding.loginBtnVerify.setOnClickListener {
-            lifecycleScope.launchWhenResumed {
-                appRepo.login("10086")
-                handleLoginResult(BaseResult.Success("欢迎10086", Unit))
-            }
+//            lifecycleScope.launchWhenResumed {
+//                appRepo.login("10086")
+//                handleLoginResult(BaseResult.Success("欢迎10086", Unit))
+//            }
 //            when (val result = mViewModel.canLoginAuth()) {
 //                is BaseResult.Failure -> {
 //                    toastService.showError(result.desc)
