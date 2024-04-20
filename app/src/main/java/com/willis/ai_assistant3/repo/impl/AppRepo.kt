@@ -42,9 +42,9 @@ object AppRepo : IAppRepo {
     private val mUserInfoDao get() = AppDatabase.instance.userInfoDao()
 
     override suspend fun isLogin(): Boolean {
-        val loggedUserPhone = getLoggedUserPhone() ?: return false
+        val loggedUserPhone = getLoggedUserPhone() ?: return false // 获取用户登陆状态
         val userInfo = mUserInfoDao.queryByPhone(loggedUserPhone) ?: return false
-        mUserInfoDao.update(userInfo.updateLoginMillis())
+        mUserInfoDao.update(userInfo.updateLoginMillis()) // 更新最后登陆时间
         mCurrentPhoneFlow.value = userInfo.phone
         return true
     }
@@ -77,10 +77,10 @@ object AppRepo : IAppRepo {
      * 自动注册
      */
     private suspend fun autoRegister(phone: String, isAdmin: Boolean): UserInfo {
-        val userInfo = insertNewUserInfo(phone)
-        insertDefaultSettingErnie(phone, isAdmin)
-        insertDefaultSettingQwen(phone, isAdmin)
-        insertDefaultSettingSpark(phone, isAdmin)
+        val userInfo = insertNewUserInfo(phone) // 用户基本信息
+        insertDefaultSettingErnie(phone, isAdmin) // 文心一言默认配置
+        insertDefaultSettingQwen(phone, isAdmin) // 通义千问默认配置
+        insertDefaultSettingSpark(phone, isAdmin) // 讯飞星火默认配置
         return userInfo
     }
 

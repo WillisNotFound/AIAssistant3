@@ -96,4 +96,5 @@ dependencies {
     implementation other.jverification
 
     implementation squareup.okhttp3
+    debugImplementation squareup.leak_canary
 }
